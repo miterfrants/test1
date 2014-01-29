@@ -1,0 +1,1 @@
+﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="rental.aspx.vb" Inherits="controller_robot_rental" %>

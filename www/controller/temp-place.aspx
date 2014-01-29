@@ -1,0 +1,1 @@
+﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="temp-place.aspx.vb" Inherits="controller_temp_place" %>

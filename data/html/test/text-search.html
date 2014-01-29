@@ -1,0 +1,106 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>PlanB</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="/js/lib/jquery-2.0.2.min.js"></script>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDMG_NlFJ6GIXrwdntTYygIHZ6lejb4tOY&libraries=places&sensor=true"></script>
+        <script type="text/javascript">
+            var key = "AIzaSyDMG_NlFJ6GIXrwdntTYygIHZ6lejb4tOY";
+            var map;
+            var timeoutTimer = 0;
+            var infowindow = new google.maps.InfoWindow();
+            var earthRadius = 6378137.3;
+            var arrMarker = new Array();
+            var locate=null;
+            var thida =90;
+            var num = 0;
+            var maxNum = 600;
+            var radius = 1000;
+            var base = 80;
+            var noResultCount = 0;
+            var isPause = false;
+            var iniLat = 24.942561337387872;
+            var iniLong = 121.36862754821777;
+            function iniMap() {
+                map = new google.maps.Map(document.getElementById('map-canvas'), {
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    center: new google.maps.LatLng(iniLat, iniLong),
+                    zoom: 15
+                });
+                google.maps.event.addListener(map, 'click', function (e) {
+                    locate = new google.maps.LatLng(e.latLng.lb, e.latLng.mb);
+                    //console.log(locate);
+                });
+            }
+            function getGooglePlace() {
+                    if (num > maxNum || isPause) {
+                        return;
+                    }
+                    var request = {
+                        location: locate,
+                        radius: radius,
+                        types: ["tourist_attraction", "food", "amusement_park", "bar", "museum", "zoo", "establishment"],
+                        query: "tourist attraction",
+                        bounds: map.getBounds()
+                    };
+                    var readOption = {
+                        strokeColor: '#FF0000',
+                        strokeOpacity: 0,
+                        strokeWeight: 0,
+                        fillColor: '#FF0000',
+                        fillOpacity: 0.35,
+                        map: map,
+                        center: locate,
+                        radius: radius
+                    };
+                    cityCircle = new google.maps.Circle(readOption);
+                    $("#auto-place").removeAttr("disabled");
+                    service = new google.maps.places.PlacesService(map);
+                    service.textSearch(request, callback);
+            }
+        
+            function callback(results, status, pagination) {
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    for (var i = 0; i < results.length; i++) {
+                        var place = results[i];
+                        var mk = new google.maps.Marker({
+                            map: map,
+                            position: results[i].geometry.location,
+                            title: place.name
+                        });
+                    }
+                    if (pagination.hasNextPage) {
+                        pagination.nextPage();
+                    }
+                }
+            }
+            
+        
+          
+            $(document).ready(function () {
+                iniMap();
+                if (locate == null) {
+                    locate = new google.maps.LatLng(iniLat,iniLong);
+                }
+                $("body").bind("keydown", function (e) {
+                    if (e.keyCode == "80") {
+                        isPause = true;
+                    } else if (e.keyCode == "83") {
+                        isPause = false;
+                        getGooglePlace();
+                    }
+                })
+            })
+            
+        </script>
+        <style>
+            html,body {height:100%;width:100%;margin:0;padding:0}
+            #map-canvas {height:100%;width:100%;}
+            input{position:absolute;top:20px;left:80px;z-index:100}
+        </style>
+    </head>
+    <body>
+        <div id="map-canvas"></div>
+    </body>
+</html>

@@ -1,0 +1,195 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>PlanB</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="/js/lib/jquery-2.0.2.min.js"></script>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=true"></script>
+        <script type="text/javascript">
+            var key = "AIzaSyCmua4N_rbg1YbNkFpGAVEO3hm_biGo3rY";
+            var map;
+            var timeoutTimer = 0;
+            var infowindow = new google.maps.InfoWindow();
+            var earthRadius = 6399592;
+            var locate;
+            var thida = 0;
+            var num = 0;
+            var maxNum = 600;
+            var radius = 50;
+            var base = 80;
+            var noResultCount = 0;
+            var isPause = false;
+            var iniLat = 23.76020942503921;
+            var iniLong = 120.970458984375;
+            var markersArray = new Array();
+            var focusMarkerIndex=0;
+            google.maps.Map.prototype.clearOverlays = function () {
+                for (var i = 0; i < markersArray.length; i++) {
+                    markersArray[i].setMap(null);
+                }
+            }
+            function iniMap() {
+                map = new google.maps.Map(document.getElementById('map-canvas'), {
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    center: new google.maps.LatLng(iniLat, iniLong),
+                    zoom: 8
+                });
+                google.maps.event.addListener(map, 'click', function (e) {
+                    console.log(e.latLng);
+                });
+            }
+            function getGooglePlace() {
+                    //var request = {
+                    //    location: locate,
+                    //    radius: radius,
+                    //    rankBy:google.maps.places.RankBy.PROMINENCE,
+                    //    types: ["tourist_attraction", "food", "amusement_park", "bar", "museum", "zoo", "establishment"],
+                    //    //types: ["food"]
+                    //    keyword:$("#place").val()
+                    //};
+                    $("#place").removeAttr("disabled");
+                    console.log(map.getCenter());
+                    var request = {
+                        bounds: map.getBounds(),
+                        query: $("#place").val(),
+                        //location: map.getCenter(),
+                        location: new google.maps.LatLng(iniLat, iniLong),
+                        raduis:150000
+                    };
+                    
+                    service = new google.maps.places.PlacesService(map);
+                    service.textSearch(request, callback);
+                    //service.radarSearch(request, callback);
+            }
+        
+            function callback(results, status, pagination) {
+                console.log(status);
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    for (var i = 0; i < results.length; i++) {
+                        var place = results[i];
+                        fetchDetail(results[i]);
+                    }
+                    if (pagination.hasNextPage) {
+                        pagination.nextPage();
+                    }
+                } 
+            }
+            
+            function fetchDetail(place) {
+                //var placeLoc = place.geometry.location;
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: place.geometry.location
+                });
+                markersArray.push(marker);
+                google.maps.event.addListener(marker, 'click', function () {
+                    infowindow.open(marker.get('map'), marker);
+                    infowindow.setContent("<div>"+place.name+"</div><input data-ref=\""+place.reference+"\" class=\"insert-button\" type=\"button\" value=\"塞資料囉!\"/>");
+                });
+                
+            }
+            
+        
+            $(document).ready(function () {
+                iniMap();
+                if (locate == null) {
+                    locate = new google.maps.LatLng(iniLat,iniLong);
+                }
+                $("#place").bind("keydown", function (e) {
+                    if (e.keyCode == "13") {
+                        for (i = 0; i < markersArray.length; i++) {
+                            markersArray[i].setMap(null);
+                        }
+                        markersArray = new Array();
+                        getGooglePlace();
+                        $("#place").blur();
+                    }
+                })
+                $("#place").focus();
+                $("body").delegate(".insert-button", "click", function (e) {
+                    console.log("a");
+                    $(".insert-button").attr("disabled","disabled");
+                    getPlaceDetail(e);
+                })
+                $("body").bind("keydown", function (e) {
+                    if ($(e.target)[0].outerHTML == $("#place")[0].outerHTML) {
+                        return;
+                    }
+                    if (e.keyCode == 67) {
+                        try {
+                            google.maps.event.trigger(markersArray[focusMarkerIndex], "click");
+                            //console.log(markersArray[focusMarkerIndex].position.jb);
+                            map.setCenter(markersArray[focusMarkerIndex].position)
+                            map.setZoom(10)
+                        } catch (ex) {
+                            console.log(focusMarkerIndex + ":" + markersArray.length);
+                        }
+                        if (Number(focusMarkerIndex) >= Number(markersArray.length - 1)) {
+                            focusMarkerIndex = 0;
+                        } else {
+                            focusMarkerIndex += 1;
+                        }
+                    }
+                    if (e.keyCode == 70) {
+                        $("#place").focus();
+                    }
+                    if (e.keyCode == 73) {
+                        $(".insert-button").trigger("click");
+                    }
+                })
+                $("#place").bind("keydown", function (e) {
+                    if (e.keyCode == "80" || e.keyCode == "83") {
+                        e.stopPropagation();
+                        return false;
+                    }
+                })
+            })
+            function getPlaceDetail(e) {
+                var request = {
+                    reference: $(e.currentTarget).data("ref")
+                };
+                service = new google.maps.places.PlacesService(map);
+                service.getDetails(request, insertDetail);
+                $(".insert-button").val("抓google 資料");
+            }
+            function insertDetail(place, status) {
+                $(".insert-button").val("新增到資料庫中");
+                console.log(place);
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    $.ajax({
+                        url: "/controller/spider.aspx?action=insert_place",
+                        data: ({
+                            
+                        }),
+                        success: function (res) {
+                            try {
+                                $(".insert-button").val("新增成功");
+                                setTimeout(function () {
+                                    for (i = 0; i < markersArray.length; i++) {
+                                        markersArray[i].setMap(null);
+                                    }
+                                    markersArray = new Array();
+                                    $("#place").focus();
+                                }, 1200);
+                            } catch (ex) {
+                                console.log(ex.toString());
+                            }
+
+                        }
+
+                    })
+                }
+            }
+        </script>
+        <style>
+            html,body {height:100%;width:100%;margin:0;padding:0}
+            #map-canvas {height:100%;width:100%;}
+            input{position:absolute;top:20px;left:80px;z-index:100;width:300px;height:30px;font-size:20px;}
+            .insert-button {width:90px;}
+        </style>
+    </head>
+    <body>
+        <input type="text" id="place" />
+        <div id="map-canvas"></div>
+    </body>
+</html>

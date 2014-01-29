@@ -1,0 +1,1 @@
+﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="detect_locate.aspx.vb" Inherits="test_nearby" %>

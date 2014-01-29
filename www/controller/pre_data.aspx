@@ -1,0 +1,1 @@
+﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="pre_data.aspx.vb" Inherits="controller_spider" ValidateRequest="false" %>

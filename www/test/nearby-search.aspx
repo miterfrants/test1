@@ -1,0 +1,1 @@
+﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="nearby-search.aspx.vb" Inherits="test_nearby_search" %>

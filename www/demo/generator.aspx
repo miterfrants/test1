@@ -1,0 +1,1 @@
+﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="generator.aspx.vb" Inherits="demo_generator" %>

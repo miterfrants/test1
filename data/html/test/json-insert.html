@@ -1,0 +1,115 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>PlanB</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="/js/lib/jquery-2.0.2.min.js"></script>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&sensor=true"></script>
+        <script type="text/javascript">
+            var key = "AIzaSyCmua4N_rbg1YbNkFpGAVEO3hm_biGo3rY";
+            var map;
+            var jsonOb = null
+            var placeArr = new Array();
+            var placeIndex = 0;
+            var infowindow = new google.maps.InfoWindow;
+            var errArray = new Array();
+            var successCount = 0;
+            function getParameterByName(name) {
+                name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+                var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                    results = regex.exec(location.search);
+                return results == null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+            }
+            $(document).ready(function () {
+                $(".status").html("讀取資料中。");
+                $.getJSON("/upload/place/json/" + getParameterByName("json_file") + ".json",
+                     function (e) {
+                         jsonOb = e
+                         flatPlace();
+                         $(".status").html("讀取已準備好了。共 "+placeArr.length+" 筆資料 請按enter開始塞入資料庫。");
+                    }
+                )
+                $("body").bind("keydown", function (e) {
+                    if (e.keyCode == 13) {
+                        fetchPlace(placeArr[placeIndex], placeArr[placeArr.length-1].Point.coordinates);
+                    }
+                })
+            })
+            function fetchPlace(ob,position) {
+                $.ajax({
+                    url: "/controller/pre_data.aspx?action=insert_json",
+                    data: ({ name: ob.name, description: ob.description, latitude: position.split(",")[0], longitude: position.split(",")[1], area_name: getParameterByName("json_file")}),
+                    success: function (e) {
+                        try {
+                            var res = eval("("+e+")");
+                            if (res.success) {
+                                placeIndex += 1;
+                                successCount += 1;
+                                $(".status").html("共" + placeArr.length + " 筆，已新增了 " + successCount + " 筆，已失敗了 " + errArray.length + " 筆。");
+                                fetchPlace(placeArr[placeIndex], placeArr[placeIndex - 1].Point.coordinates);
+                            } else {
+                                $(".error-log").append("<div class=\"fail-content\">"+getParameterByName("json_file") + ":" + ob.name + " 失敗原因 " + res.msg +"</div>");
+                                errArray.push(res);
+                                $(".status").html("共" + placeArr.length + " 筆，已新增了 " + successCount + " 筆，已失敗了 " + errArray.length + " 筆。");
+                                placeIndex += 1;
+                                fetchPlace(placeArr[placeIndex], placeArr[placeIndex - 1].Point.coordinates);
+                            }
+                        } catch (ex) {
+                            $(".error-log").append("<div class=\"fail-content\">" + getParameterByName("json_file") + "-" + ob.name + ": 新增失敗 " + ex.toString() + "</div>");
+                            errArray.push(ex);
+                            $(".status").html("共" + placeArr.length + " 筆，已新增了 " + successCount + " 筆，已失敗了 " + errArray.length + " 筆。");
+                            placeIndex += 1;
+                            fetchPlace(placeArr[placeIndex], placeArr[placeIndex - 1].Point.coordinates);
+                        }
+
+                    }
+                })
+            }
+            function flatPlace() {
+                parseFolder(jsonOb.Document);
+            }
+          
+            function parseFolder(ob) {
+                for (var key in ob) {
+                    if (key == "Folder") {
+                        //是陣列
+                        if (typeof (ob[key].length) != "undefined") {
+                            for (var i = 0; i < ob[key].length; i++) {
+                                parseFolder(ob[key][i]);
+                            }
+                        } else {
+                            parseFolder(ob[key]);
+                        }
+                        
+                    } else if (key == "Placemark") {
+                        //是陣列
+                        if (typeof (ob[key].length) != "undefined") {
+                            for (var i = 0; i < ob[key].length; i++) {
+                                placeArr.push(ob[key][i]);
+                            }
+                        } else {
+                            placeArr.push(ob[key]);
+                        }
+                    }
+                }
+
+            }
+        </script>
+        <style>
+            html,body {height:100%;width:100%;margin:0;padding:0}
+            .status {display: block;background: none;position: absolute;top: 67px;left: 86px;z-index: 203;background: #ccc;padding: 5px;color: #fff;}
+            .check-status {display: block;background: none;position: absolute;top: 110px;left: 86px;z-index: 203;background: #ccc;padding: 5px;color: #fff;}
+            .check-list {width:20%;float:left; overflow-y:scroll;height:100%;}
+            .check-list dl{padding:20px;}
+            .check-list dt{font-size:20px;}
+            .check-list dd{margin:2px 0 0 0;}
+            dl.list.selected {background:#c8ead7}
+            .error-log {position:absolute;right:50px;}
+            .fail-content {margin:10px 0 10px 0;}
+        </style>
+    </head>
+    <body>
+        <div class="status"></div>
+        <div class="error-log"></div>
+    </body>
+</html>

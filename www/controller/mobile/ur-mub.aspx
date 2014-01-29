@@ -1,0 +1,1 @@
+﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="ur-mub.aspx.vb" Inherits="controller_mobile_ur_mub" %>

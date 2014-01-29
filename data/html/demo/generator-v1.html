@@ -1,0 +1,172 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>PlanB</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="/js/lib/jquery-2.0.2.min.js"></script>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyDMG_NlFJ6GIXrwdntTYygIHZ6lejb4tOY&sensor=true"></script>
+        <script type="text/javascript">
+            var key = "AIzaSyDMG_NlFJ6GIXrwdntTYygIHZ6lejb4tOY";
+            var map;
+            var timeoutTimer = 0;
+            var infowindow = new google.maps.InfoWindow();
+            var earthRadius = 6378137.3;
+            var arrMarker = new Array();
+            var locate = null;
+            var thida = 90;
+            var num = 0;
+            var maxNum = 600;
+            var radius = 15000;
+            var base = 80;
+            var noResultCount = 0;
+            var isPause = false;
+            var iniLat = 24.942561337387872;
+            var iniLong = 121.36862754821777;
+            function iniMap() {
+                google.maps.visualRefresh = true;
+                map = new google.maps.Map(document.getElementById('map-canvas'), {
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    center: new google.maps.LatLng(iniLat, iniLong),
+                    zoom: 8,
+                    panControl: false,
+                    zoomControl: false,
+                    scaleControl: true,
+                    mapTypeControl: false,
+                    streetViewControl: false,
+                    overviewMapControl: false,
+                });
+                google.maps.event.addListener(map, 'click', function (e) {
+                    locate = new google.maps.LatLng(e.latLng.lb, e.latLng.mb);
+                    //console.log(locate);
+                });
+            }
+            function getGooglePlace(locate) {
+                if (num > maxNum || isPause) {
+                    return;
+                }
+                var request = {
+                    location: locate,
+                    radius: radius,
+                    key: key,
+                    rankBy: google.maps.places.RankBy.PROMINENCE,
+                    //types: ["tourist_attraction", "food", "amusement_park", "bar", "museum", "zoo", "establishment"],
+                    //types: ["food"]
+                    keyword: "tourist attraction"
+                };
+
+                var readOption = {
+                    strokeColor: '#FF0000',
+                    strokeOpacity: 0,
+                    strokeWeight: 0,
+                    fillColor: '#FF0000',
+                    fillOpacity: 0.35,
+                    map: map,
+                    center: locate,
+                    radius: radius
+                };
+                cityCircle = new google.maps.Circle(readOption);
+                $("#auto-place").removeAttr("disabled");
+                service = new google.maps.places.PlacesService(map);
+                service.nearbySearch(request, callback);
+            }
+
+            function callback(results, status, pagination) {
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    for (var i = 0; i < results.length; i++) {
+                        var place = results[i];
+                        console.log(place);
+                        var marker = new google.maps.Marker({
+                            map: map,
+                            position: place.geometry.location,
+                            title: place.name
+                        });
+                    }
+                    /*
+                    if (pagination.hasNextPage) {
+                        pagination.nextPage();
+                    }
+					*/
+                } else {
+                    console.log(status);
+                }
+            }
+            function findNext(loc, dis, radius, thida) {
+                var dis = dis;
+                var a = Math.sin(loc.lb * Math.PI / 180);
+                var b = Math.cos(2.1 * dis / radius);
+                var c = Math.cos(loc.lb * Math.PI / 180);
+                var d = Math.cos(thida * Math.PI / 180);
+                var e = Math.sin(2.1 * dis / radius);
+                var lat2 = Math.asin(a * b + c * d * e) * 180 / Math.PI;
+                var la = Math.cos(loc.lb * Math.PI / 180);
+                var lb = Math.sin(thida * Math.PI / 180);
+                var lc = Math.sin(2.1 * dis / radius);
+                var ld = Math.cos(2.1 * dis / radius);
+                var le = Math.sin(loc.lb * Math.PI / 180);
+                var lf = Math.sin(lat2 * Math.PI / 180);
+                var lon2 = loc.mb + Math.atan(la * lb * lc / (ld - le * lf)) * 180 / Math.PI;
+                return new google.maps.LatLng(lat2, lon2);
+                //locate = new google.maps.LatLng(lat2, lon2);
+                //console.log(locate);
+                //num += 1;
+                //setTimeout(function () { getGooglePlace() }, 1000);
+            }
+
+
+            $(document).ready(function () {
+                iniMap();
+                if (locate == null) {
+                    locate = new google.maps.LatLng(iniLat, iniLong);
+                }
+                $("body").bind("keydown", function (e) {
+                    if (e.keyCode == "80") {
+                        isPause = true;
+                    } else if (e.keyCode == "83") {
+                        isPause = false;
+                        //first
+                        //getGooglePlace(locate);
+                        //second
+                        getGooglePlace(findNext(locate, radius, earthRadius, 45))
+                        getGooglePlace(findNext(locate, radius, earthRadius, 135))
+                        getGooglePlace(findNext(locate, radius, earthRadius, 225))
+                        getGooglePlace(findNext(locate, radius, earthRadius, 315))
+                        getGooglePlace(findNext(locate, radius, earthRadius, 0))
+                        getGooglePlace(findNext(locate, radius, earthRadius, 90))
+                        getGooglePlace(findNext(locate, radius, earthRadius, 180))
+                        getGooglePlace(findNext(locate, radius, earthRadius, 270))
+
+                    }
+                })
+            })
+
+        </script>
+        <style>
+            html,body {height:100%;width:100%;margin:0;padding:0}
+            #map-canvas {height:100%;width:80%;float:left;}
+            #place{position:absolute;top:20px;left:20px;z-index:100;width:300px;height:20px;font-size:16px;}
+            .insert-button {width:90px;}
+            .status {display: block;background: none;position: absolute;top: 67px;left: 86px;z-index: 203;background: #ccc;padding: 5px;color: #fff;}
+            .check-status {display: block;background: none;position: absolute;top: 110px;left: 86px;z-index: 203;background: #ccc;padding: 5px;color: #fff;}
+            .check-list {width:20%;float:left; overflow-y:scroll;height:100%;}
+            .check-list dl{padding:20px;}
+            .check-list dt{font-size:20px;}
+            .check-list dd{margin:2px 0 0 0;}
+            dl.list.selected {background:#c8ead7}
+        </style>
+    </head>
+    <body>
+        <div class="status"></div>
+        <div class="check-status"></div>
+        <input type="text" id="place" />
+        <div id="map-canvas"></div>
+        <div class="check-list">
+            <dl style="display:none">
+                <dt></dt>
+                <dd><input class="insert-button" type="button" value="新增資料" /></dd>
+                <dd class="address"></dd>
+                <dd class="rating"></dd>
+                <dd class="description"></dd>
+            </dl>
+        </div>
+    </body>
+</html>

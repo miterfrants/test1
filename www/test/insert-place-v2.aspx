@@ -1,0 +1,1 @@
+﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="insert-place-v2.aspx.vb" Inherits="test_insert_place_v2" %>

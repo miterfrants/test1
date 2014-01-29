@@ -1,0 +1,82 @@
+﻿<!--
+To change this template, choose Tools | Templates
+and open the template in the editor.
+-->
+<!DOCTYPE html>
+<html>
+    <head>
+        <title></title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="../css/main.css" />
+        <script type="text/javascript" src="../js/lib/require.js"></script>
+    </head>
+    <body>
+        <div class="top-bar">
+            
+            <div class="icon-logo"></div>
+            <!--Login S-->
+            <div class="level"></div>
+            <div class="profile-img">{Profile_Img}</div>
+            <div class="icon-db-config btn"></div>
+            <div class="exp-nav">
+                <div class="exp-bar"></div>
+            </div>
+            <!--Login E-->
+            <div class="mask"></div>
+        </div>
+        <div id="content" >
+            
+        </div>
+        
+        <div class="footer">
+            <div class="mask"></div>
+            <div class="comment-nav">
+                <textarea class="comment no-data">Please leave some comment for improve our web service.</textarea>
+                <div class="btn-send-comment btn">Send</div>
+            </div>
+
+            <div class="schedule-process">
+                <dl class="point active">
+                    <dt>{FLAG_1_TITLE}</dt>
+                    <dd>{DESC_1}</dd>
+                </dl>
+                <dl class="point">
+                    <dt>{FLAG_2_TITLE}</dt>
+                    <dd>{DESC_2}</dd>
+                </dl>
+                <dl class="point">
+                    <dt>{FLAG_3_TITLE}</dt>
+                    <dd>{DESC_3}</dd>
+                </dl>
+                <dl class="point">
+                    <dt>{FLAG_4_TITLE}</dt>
+                    <dd>{DESC_4}</dd>
+                </dl>
+                <dl class="point">
+                    <dt>{FLAG_5_TITLE}</dt>
+                    <dd>{DESC_5}</dd>
+                </dl>
+                <dl class="point">
+                    <dt>{FLAG_6_TITLE}</dt>
+                    <dd>{DESC_6}</dd>
+                </dl>
+                <dl class="point">
+                    <dt>{FLAG_7_TITLE}</dt>
+                    <dd>{DESC_7}</dd>
+                </dl>
+                <dl class="point">
+                    <dt>{FLAG_8_TITLE}</dt>
+                    <dd>{DESC_8}</dd>
+                </dl>
+            </div>
+            <div class="paypal">
+                <form action="https://www.paypal.com/cgi-bin/webscr" method="post" target="_top">
+                    <input type="hidden" name="cmd" value="_s-xclick">
+                    <input type="hidden" name="hosted_button_id" value="4GR8TCDEVKBYC">
+                    <input type="image" src="https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif" border="0" name="submit" alt="PayPal - The safer, easier way to pay online!">
+                    <img alt="" border="0" src="../img/grey.gif" data-original="https://www.paypalobjects.com/en_US/i/scr/pixel.gif" class="lazy" width="1" height="1">
+                </form>
+            </div>
+        </div>
+    </body>
+</html>

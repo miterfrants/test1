@@ -1,0 +1,2500 @@
+﻿<?xml version="1.0"?>
+<doc>
+<assembly>
+<name>
+UW
+</name>
+</assembly>
+<members>
+<member name="M:UW.Display.checkBox(System.Data.DataTable,System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+	<summary>
+ checkBox  <!--XXX Start--><!--XXX End-->
+	</summary>
+	<param name="DT">DataTable</param>
+	<param name="Name">checkbox 名稱</param>
+	<param name="Key">下拉式選單顯示值</param>
+	<param name="Value">下拉式選單實際值</param>
+	<param name="Template">頁面</param>
+	<returns>回傳String</returns>
+	<remarks>頁面取代 #KEY# #VALUE# #CHECKBOX_NAME# #CHECKED#</remarks>
+</member><member name="M:UW.Display.Selection(System.Data.DataTable,System.String,System.String,System.String)">
+	<summary>
+ Selection  <!--XXX Start--><!--XXX End-->
+	</summary>
+	<param name="DT">DataTable</param>
+	<param name="Key">下拉式選單顯示值</param>
+	<param name="Value">下拉式選單實際值</param>
+	<param name="SelectedItem">預設被選取的Value</param>
+	<returns>回傳String</returns>
+	<remarks>頁面取代 #KEY# #VALUE# #CHECKBOX_NAME# #CHECKED#</remarks>
+</member><member name="M:UW.Display.Table(System.Array,System.Data.DataTable,System.String,System.String,System.String)">
+	<summary>
+ Table  <!--XXX Start--><!--XXX End-->
+	</summary>
+	<param name="DT">DataTable</param>
+	<param name="Title">標題</param>
+	<returns>回傳String</returns>
+	<remarks>頁面取代 #KEY# #VALUE# #CHECKBOX_NAME# #CHECKED#</remarks>
+</member><member name="P:UW.Mail.SmtpClient">
+	<summary>
+ 不要再使用這個物件了, 在 .NET 4.0 容易造成錯誤 !! 請改指定 SMTP_SERVER_NAME
+ </summary>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Mail.SendMail(System.String,System.String,System.String,System.String,System.String,System.Boolean,System.Text.Encoding,System.Net.Mail.SmtpClient,System.String,System.Net.Mail.MailPriority,System.String,System.Collections.ArrayList,System.String,System.Collections.Hashtable)">
+	<summary>
+	</summary>
+	<param name="ToMails"></param>
+	<param name="FromMail"></param>
+	<param name="Subject"></param>
+	<param name="Body"></param>
+	<param name="CC"></param>
+	<param name="IsBodyHtml"></param>
+	<param name="BodyEncoding">預設是 utf8</param>
+	<param name="Smtp"></param>
+	<param name="BCC"></param>
+	<param name="Priority"></param>
+	<param name="PathFileName"></param>
+	<remarks></remarks>
+</member><member name="M:UW.Session.AddValueToHashTableForSinglePage(System.String,System.Object)">
+	<summary>
+ 理論上來說, 這個 function 在多工的環境下會有問題, 但假設同一個 Session 的使用者只會同時使用一個 Browser, 所以暫時不考慮多工的問題.
+ </summary>
+	<param name="Key"></param>
+	<param name="Value"></param>
+	<remarks></remarks>
+</member><member name="M:UW.HTML.getTagEndPos(System.Int32,System.Int32)">
+	<summary>
+ 抓取tag封閉位置
+ </summary>
+	<param name="iniPos"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.HTML.getIniTagByAttr(System.String,System.String,System.Int32)">
+	<summary>
+ 從HTML物件中抓第一個屬性是attrName="attrValue"
+ </summary>
+	<param name="attrName">HTML 屬性名稱</param>
+	<param name="attrValue">HTML 屬性值</param>
+	<remarks>HTML記得以小寫書寫，改版後沒辦法大小寫不分辨。
+ 目前想不到方法抓屬性多個值，正則效能不好。</remarks>
+</member><member name="M:UW.HTML.getTagByAttr(System.String,System.String,System.Int32,System.Int32)">
+	<summary>
+ 抓符合attrName=attrValue的Tag
+ </summary>
+	<param name="attrName">屬性名稱大小寫有別</param>
+	<param name="attrValue">屬性質大小寫有別</param>
+	<param name="startPos">開始位置初始值為0</param>
+	<param name="max">抓封閉Tag的層數預設超過二十層會丟exception</param>
+	<returns></returns>
+</member><member name="M:UW.HTML.getTagByMemo(System.String,System.Int32,System.Int32)">
+	<summary>
+ getTagByAttr還不是很完整的時候先用這個撐一下。
+ </summary>
+	<param name="key"></param>
+	<param name="max"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.HTML.getIniTagById(System.String)">
+	<summary>
+ 抓id值的開頭Tag
+ </summary>
+	<param name="id">HTML id值大小有別</param>
+	<returns></returns>
+	<remarks>請丟ID</remarks>
+</member><member name="M:UW.HTML.getTagById(System.String,System.Int32)">
+	<summary>
+ 抓取Id符合條件的Tag
+ </summary>
+	<param name="id"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.HTML.getTagName(System.String)">
+	<summary>
+ 抓取Tag的名稱
+ </summary>
+	<param name="tag"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.HTML.getAttr(System.String,System.String,System.String)">
+	<summary>
+	</summary>
+	<param name="attrName"></param>
+	<param name="key"></param>
+	<param name="value"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.HTML.getTagArrayByAttr(System.String,System.String,System.Int32)">
+	<summary>
+ 抓取符合attrName=attrValue的物件集合
+ </summary>
+	<param name="attrName">屬性名稱 大小有別</param>
+	<param name="attrValue">屬性值 大小有別</param>
+	<param name="max">最大集合長度</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.HTML.getTagArrayByTagName(System.String,System.Int32)">
+	<summary>
+	</summary>
+	<param name="tagName"></param>
+	<param name="max"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.HTML.getChild(System.Int32,System.Int32)">
+	<summary>
+ 抓第index索引的Child
+ </summary>
+	<param name="index">序號</param>
+	<param name="max"></param>
+	<returns></returns>
+	<remarks>
+ 123
+ </remarks>
+</member><member name="M:UW.HTML.getChildren(System.Int32)">
+	<summary>
+ 抓Result的所有第一層chlidren
+ </summary>
+	<param name="max"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.HTML.getElement(System.String,System.Int32)">
+	<summary>
+	</summary>
+	<param name="childStr"></param>
+	<param name="max"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.HTML.getParent(System.String,System.Int32,System.Boolean)">
+	<summary>
+ 抓上一層的父Tag
+ </summary>
+	<param name="idOrTag"></param>
+	<param name="max"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.HTML.hasAttr(System.String,System.String,System.Int32)">
+	<summary>
+ 是否有此屬性=屬性值
+ </summary>
+	<param name="attrName"></param>
+	<param name="attrValue"></param>
+	<param name="max"></param>
+	<returns></returns>
+	<remarks>getTagByAttr這個目前只能做單一值比對 class="1", class="photo,news"
+ 後面這個抓不出來
+ </remarks>
+</member><member name="M:UW.HTML.addCss(System.String,System.Boolean)">
+	<summary>
+	</summary>
+	<param name="linkorstyle"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.HTML.addScript(System.String,System.Boolean)">
+	<summary>
+	</summary>
+	<param name="linkorscript"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.HTML.setAttr(System.String,System.String,System.String,System.String,System.Boolean,System.String)">
+	<summary>
+ 設定符合key=value 的tag attribute
+ </summary>
+	<param name="attrname">屬性名稱</param>
+	<param name="attrvalue">屬性值</param>
+	<param name="key">符合條件參數名稱</param>
+	<param name="value">符合條件參數值</param>
+	<param name="childString">
+ 設定符合的chlid
+ =&gt;tagName
+ @attrName=attrValue
+ </param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.HTML.replaceTag(System.String,System.String,System.Boolean)">
+	<summary>
+	</summary>
+	<param name="id"></param>
+	<param name="value"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.HTML._bind(System.String,System.Data.DataTable,System.String)">
+	<summary>
+ 基本的bind Function
+ </summary>
+	<param name="tmp"></param>
+	<param name="dt"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.HTML.bind(System.String,System.Data.DataTable)">
+	<summary>
+ 抓住Id把Record2的欄位取代HTML中#key#
+ </summary>
+	<param name="id">要取代的Id</param>
+	<param name="dt"></param>
+	<returns></returns>
+	<remarks>
+ 缺點是要產生DB Object更改欄位
+ 要在重新Update DB Object
+ 可以考慮用Bind(datatable)
+ </remarks>
+</member><member name="M:UW.HTML.renderPager(System.String,UW.SQL.PageDT2,System.String,System.String,System.String,System.String,System.Boolean,System.String,System.Int32,System.Int32)">
+	<summary>
+ 這個現在還沒辦法完全不更改HTML
+ 一定要在tag加上#Link#和#Num#
+ 這個這不要在使用了因為IE 很容易不支援 同ID 的TAG 所以要換成Class
+ </summary>
+	<param name="id"></param>
+	<param name="pd"></param>
+	<param name="currentPageId"></param>
+	<param name="normalPageId"></param>
+	<param name="nextPageId"></param>
+	<param name="prePageId"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.HTML.renderPagerByClass(System.String,UW.SQL.PageDT2,System.String,System.String,System.String,System.String,System.Boolean,System.String,System.Int32,System.Int32)">
+	<summary>
+ 這個是比較新的做法就是 頁數用CLASS來做 2012年就會轉換成renderPager取代現有的
+ </summary>
+	<param name="id"></param>
+	<param name="currentPageClass"></param>
+	<param name="normalPageClass"></param>
+	<param name="nextPageClass"></param>
+	<param name="prePageClass"></param>
+	<param name="autoHideOthers"></param>
+	<param name="rootlink"></param>
+	<param name="limit"></param>
+	<param name="spreadNumber"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.HTML.getInputTypeByName(System.String)">
+	<summary>
+ 抓取 Input Type (Select,text,hidden,textarea,radio)
+ </summary>
+	<param name="name"></param>
+	<returns></returns>
+	<remarks>Name 要記得大小寫有別</remarks>
+</member><member name="M:UW.TextFns.SubStringIgnoreTag(System.String,System.Int32,System.Int32)">
+	<summary>
+ SubStringIgnoreTag  <!--XXX Start--><!--XXX End-->
+	</summary>
+	<param name="Target">目標字串</param>
+	<param name="InitialPos">開始位置</param>
+	<param name="Len">長度</param>
+	<returns>字串</returns>
+	<remarks></remarks>
+</member><member name="M:UW.TextFns.RemoveBlock2(System.String,System.String,System.Boolean)">
+	<summary>
+ 給 HTML 註解式的 Block 使用 <!--XXX Start--><!--XXX End-->
+	</summary>
+	<param name="Content"></param>
+	<param name="BlockKey"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.TextFns.RelateToAbsoluteURL(System.String,System.String)">
+	<summary>
+	</summary>
+	<param name="Content"></param>
+	<param name="Base">Base 最好是 "/" 結尾</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.TextFns.RelateToAbsoluteURLWithKey(System.String,System.String,System.String)">
+	<summary>
+	</summary>
+	<param name="Content"></param>
+	<param name="Base"></param>
+	<param name="key">AttributeName，Forex: src=, href=, background=</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.TextFns.UrlWithHostNameOnly(System.String)">
+	<summary>
+ URL 應該是 http:// 開頭的網址，傳回值沒有結束的 "/"
+ </summary>
+	<param name="URL"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.TextFns.IsItemOf(System.String,System.String)">
+	<summary>
+ 檢查 Item 是否在 ItemList 之中
+ </summary>
+	<param name="ItemList">用逗號分隔的項目清單</param>
+	<param name="Item">單一項目</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.TextFns.WordWidth(System.String)">
+	<summary>
+ 英文算一個字元，中文字算兩個字元
+ </summary>
+	<param name="strText"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.TextFns.CutWords(System.String,System.Int32,System.String,System.Boolean)">
+	<summary>
+ 將字縮減到某個長度 中文字算兩個字元
+ </summary>
+	<param name="strText"></param>
+	<param name="MaxLength">英文字的長度, 中文字算兩個字元</param>
+	<param name="Tail"></param>
+	<param name="WithTail"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.TextFns.FileExt(System.String)">
+	<summary>
+ 傳回值不包括 "."
+ </summary>
+	<param name="FileName"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.TextFns.FileNameWithoutExtentionalName(System.String)">
+	<summary>
+ 不含副檔名之檔案名稱
+ </summary>
+	<param name="FileName"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.SQLTextFns.TableNameOrFieldName(System.String)">
+	<summary>
+ 傳回 [Name], 其中的 ' 和 [ ] 都會被移除
+ </summary>
+	<param name="Name"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.FileUtil.WriteToTextFileOld(System.String,System.String,System.Boolean,System.Boolean,System.Boolean)">
+	<summary>
+ 這個是從 .NET 1.1 的 UW 轉換過來的, 轉換 .NET 1.1 的專案時, 要先把 WriteToTextFile 註解掉, 把所有的 WriteToTextFile 換成 WriteToTextFileOld, Compile 過了之後再拿掉 WriteToTextFile 的註解
+ </summary>
+	<param name="Message"></param>
+	<param name="FileName"></param>
+	<param name="IsAppend"></param>
+	<param name="IsRemoveOld"></param>
+	<param name="IsAutoCreateDirectory"></param>
+	<remarks></remarks>
+</member><member name="M:UW.FileUtil.WriteToTextFileWithEncoding(System.String,System.String,System.Text.Encoding,System.Boolean)">
+	<summary>
+	</summary>
+	<param name="FileName"></param>
+	<param name="AllData"></param>
+	<param name="Encoding">ex. Encoding.UTF8</param>
+	<param name="Append"></param>
+	<remarks></remarks>
+</member><member name="M:UW.FileUtil.StoreFile(System.Int32,System.String,System.Boolean,System.String,UW.EN.ThreeSatatBoolean_ForConfig)">
+	<summary>
+ 存檔，並傳回檔名
+ </summary>
+	<param name="Index">第 N 個 Post 的 File，從 0 開始</param>
+	<param name="Path">存檔的路徑</param>
+	<returns>存檔的檔名，不包括 Path</returns>
+	<remarks></remarks>
+</member><member name="M:UW.FileUtil.StoreFile(System.Web.UI.WebControls.FileUpload,System.String,System.String,System.Boolean,System.String,UW.EN.ThreeSatatBoolean_ForConfig,System.Boolean,System.Boolean,System.Boolean)">
+	<summary>
+	</summary>
+	<param name="FU"></param>
+	<param name="Path"></param>
+	<param name="FileNamePostfix"></param>
+	<param name="IsCreateDirectory"></param>
+	<param name="Extensions"></param>
+	<param name="IsKeepOriginalFileName"></param>
+	<param name="IsAddTimeStampBeforeOriiginalFileName"></param>
+	<param name="IsCreateDatePath"></param>
+	<param name="IsAddFileSequence"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.FileUtil.StoreFile(System.Web.HttpPostedFile,System.String,System.String,System.Boolean,System.String,UW.EN.ThreeSatatBoolean_ForConfig,System.Boolean,System.Boolean,System.Boolean,UW.DB.Record,System.String)">
+	<summary>
+	</summary>
+	<param name="PostFile"></param>
+	<param name="Path"></param>
+	<param name="FileNamePostfix"></param>
+	<param name="IsCreateDirectory"></param>
+	<param name="Extensions"></param>
+	<param name="IsKeepOriginalFileName"></param>
+	<param name="IsAddTimeStampBeforeOriiginalFileName"></param>
+	<param name="IsCreateDatePath">會依時間建立 yyyy\mm\dd 的目錄，但不會傳回，所以檔名必需和時間有關。</param>
+	<param name="Dummy">一個假的變數，取代 AllowSWF 的代置，以便讓舊的程式產生 Compile 的錯誤。</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.NewHTML.getTagEndPos(System.Int32,System.Int32)">
+	<summary>
+ 抓取tag封閉位置
+ </summary>
+	<param name="iniPos"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.NewHTML.getIniTagByAttr(System.String,System.String,System.Int32)">
+	<summary>
+ 從NewHTML物件中抓第一個屬性是attrName="attrValue"
+ </summary>
+	<param name="attrName">NewHTML 屬性名稱</param>
+	<param name="attrValue">NewHTML 屬性值</param>
+	<remarks>NewHTML記得以小寫書寫，改版後沒辦法大小寫不分辨。
+ 目前想不到方法抓屬性多個值，正則效能不好。</remarks>
+</member><member name="M:UW.NewHTML.getTagByAttr(System.String,System.String,System.Int32,System.Int32)">
+	<summary>
+ 抓符合attrName=attrValue的Tag
+ </summary>
+	<param name="attrName">屬性名稱大小寫有別</param>
+	<param name="attrValue">屬性質大小寫有別</param>
+	<param name="startPos">開始位置初始值為0</param>
+	<param name="max">抓封閉Tag的層數預設超過二十層會丟exception</param>
+	<returns></returns>
+</member><member name="M:UW.NewHTML.getTagByMemo(System.String,System.Int32)">
+	<summary>
+ getTagByAttr還不是很完整的時候先用這個撐一下。
+ </summary>
+	<param name="key"></param>
+	<param name="max"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.NewHTML.getIniTagById(System.String)">
+	<summary>
+ 抓id值的開頭Tag
+ </summary>
+	<param name="id">NewHTML id值大小有別</param>
+	<returns></returns>
+	<remarks>請丟ID</remarks>
+</member><member name="M:UW.NewHTML.getTagById(System.String,System.Int32)">
+	<summary>
+ 抓取Id符合條件的Tag
+ </summary>
+	<param name="id"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.NewHTML.getTagName(System.String)">
+	<summary>
+ 抓取Tag的名稱
+ </summary>
+	<param name="tag"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.NewHTML.getAttr(System.String,System.String,System.String)">
+	<summary>
+	</summary>
+	<param name="attrName"></param>
+	<param name="key"></param>
+	<param name="value"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.NewHTML.getTagArrayByAttr(System.String,System.String,System.Int32)">
+	<summary>
+ 抓取符合attrName=attrValue的物件集合
+ </summary>
+	<param name="attrName">屬性名稱 大小有別</param>
+	<param name="attrValue">屬性值 大小有別</param>
+	<param name="max">最大集合長度</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.NewHTML.getTagArrayByTagName(System.String,System.Int32)">
+	<summary>
+	</summary>
+	<param name="tagName"></param>
+	<param name="max"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.NewHTML.getChild(System.Int32,System.Int32)">
+	<summary>
+ 抓第index索引的Child
+ </summary>
+	<param name="index">序號</param>
+	<param name="max"></param>
+	<returns></returns>
+	<remarks>
+ 123
+ </remarks>
+</member><member name="M:UW.NewHTML.getChildren(System.Int32)">
+	<summary>
+ 抓Result的所有第一層chlidren
+ </summary>
+	<param name="max"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.NewHTML.getElement(System.String,System.Int32)">
+	<summary>
+	</summary>
+	<param name="childStr"></param>
+	<param name="max"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.NewHTML.getParent(System.String,System.Int32,System.Boolean)">
+	<summary>
+ 抓上一層的父Tag
+ </summary>
+	<param name="idOrTag"></param>
+	<param name="max"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.NewHTML.hasAttr(System.String,System.String,System.Int32)">
+	<summary>
+ 是否有此屬性=屬性值
+ </summary>
+	<param name="attrName"></param>
+	<param name="attrValue"></param>
+	<param name="max"></param>
+	<returns></returns>
+	<remarks>getTagByAttr這個目前只能做單一值比對 class="1", class="photo,news"
+ 後面這個抓不出來
+ </remarks>
+</member><member name="M:UW.NewHTML.addCss(System.String,System.Boolean)">
+	<summary>
+	</summary>
+	<param name="linkorstyle"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.NewHTML.addScript(System.String,System.Boolean)">
+	<summary>
+	</summary>
+	<param name="linkorscript"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.NewHTML.setAttr(System.String,System.String,System.String,System.String,System.Boolean,System.String)">
+	<summary>
+ 設定符合key=value 的tag attribute
+ </summary>
+	<param name="attrname">屬性名稱</param>
+	<param name="attrvalue">屬性值</param>
+	<param name="key">符合條件參數名稱</param>
+	<param name="value">符合條件參數值</param>
+	<param name="childString">
+ 設定符合的chlid
+ =&gt;tagName
+ @attrName=attrValue
+ </param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.NewHTML.replaceTag(System.String,System.String,System.Boolean)">
+	<summary>
+	</summary>
+	<param name="id"></param>
+	<param name="value"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.NewHTML._bind(System.String,System.Data.DataTable)">
+	<summary>
+ 基本的bind Function
+ </summary>
+	<param name="tmp"></param>
+	<param name="dt"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.NewHTML.bind(System.String,System.Data.DataTable)">
+	<summary>
+ 抓住Id把Record2的欄位取代NewHTML中#key#
+ </summary>
+	<param name="id">要取代的Id</param>
+	<param name="dt"></param>
+	<returns></returns>
+	<remarks>
+ 缺點是要產生DB Object更改欄位
+ 要在重新Update DB Object
+ 可以考慮用Bind(datatable)
+ </remarks>
+</member><member name="M:UW.NewHTML.renderPager(System.String,UW.SQL.PageDT2,System.String,System.String,System.String,System.String,System.Boolean)">
+	<summary>
+ 這個現在還沒辦法完全不更改HTML
+ 一定要在tag加上#Link#和#Num#
+ </summary>
+	<param name="id"></param>
+	<param name="pd"></param>
+	<param name="currentPageId"></param>
+	<param name="normalPageId"></param>
+	<param name="nextPageId"></param>
+	<param name="prePageId"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.NewHTML.getInputTypeByName(System.String)">
+	<summary>
+ 抓取 Input Type (Select,text,hidden,textarea,radio)
+ </summary>
+	<param name="name"></param>
+	<returns></returns>
+	<remarks>Name 要記得大小寫有別</remarks>
+</member><member name="F:UW.PG.Head1">
+	<summary>
+Head1 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG.form1">
+	<summary>
+form1 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG.txtClassName">
+	<summary>
+txtClassName 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG.ddlDBC">
+	<summary>
+ddlDBC 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG.txttableName">
+	<summary>
+txttableName 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG.txtID">
+	<summary>
+txtID 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG.ddlIdType">
+	<summary>
+ddlIdType 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG.txtBasetableName">
+	<summary>
+txtBasetableName 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG.txtPassword">
+	<summary>
+txtPassword 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG.btnGetfields">
+	<summary>
+btnGetfields 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG.btnGetFieldAndGenerateCode">
+	<summary>
+btnGetFieldAndGenerateCode 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG.btnResultFromFields">
+	<summary>
+btnResultFromFields 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG.cbTail">
+	<summary>
+cbTail 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG.cbNamespace">
+	<summary>
+cbNamespace 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG.tblFiels">
+	<summary>
+tblFiels 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG.table1">
+	<summary>
+table1 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG.txtFieldAndType">
+	<summary>
+txtFieldAndType 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG.btnGenerate">
+	<summary>
+btnGenerate 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG.lblPG">
+	<summary>
+lblPG 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG.txtRes">
+	<summary>
+txtRes 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG.lblVB">
+	<summary>
+lblVB 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG.txtVBRes">
+	<summary>
+txtVBRes 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2008.Head1">
+	<summary>
+Head1 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2008.form1">
+	<summary>
+form1 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2008.txtClassName">
+	<summary>
+txtClassName 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2008.ddlDBType">
+	<summary>
+ddlDBType 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2008.ddlDBC">
+	<summary>
+ddlDBC 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2008.txttableName">
+	<summary>
+txttableName 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2008.txtID">
+	<summary>
+txtID 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2008.ddlIdType">
+	<summary>
+ddlIdType 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2008.txtBasetableName">
+	<summary>
+txtBasetableName 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2008.txtPassword">
+	<summary>
+txtPassword 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2008.btnGetfields">
+	<summary>
+btnGetfields 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2008.btnResultFromFields">
+	<summary>
+btnResultFromFields 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2008.cbTail">
+	<summary>
+cbTail 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2008.cbAddNameSpace">
+	<summary>
+cbAddNameSpace 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2008.tblFiels">
+	<summary>
+tblFiels 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2008.table1">
+	<summary>
+table1 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2008.txtFieldAndType">
+	<summary>
+txtFieldAndType 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2008.btnGenerate">
+	<summary>
+btnGenerate 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2008.lblPG">
+	<summary>
+lblPG 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2008.txtRes">
+	<summary>
+txtRes 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2008.lblVB">
+	<summary>
+lblVB 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2008.txtVBRes">
+	<summary>
+txtVBRes 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="M:UW.Template.AddHTItem">
+	<summary>
+ 新增一個 Hashtable 來放資料, Hashtable 被放在 Internal Array List 裡, 最後要叫用 BindInternalArrayListOfHashtable 來把資料填入.
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.#ctor(System.String,System.Boolean,System.String,System.Boolean)">
+	<summary>
+	</summary>
+	<param name="strFileNameOrTemplate"></param>
+	<param name="IsFromFile"></param>
+	<param name="SubTemplateKey">設定這個 Template 的 SubTemplateKey</param>
+	<remarks></remarks>
+</member><member name="M:UW.Template.GetTemplateClassFromPlaceHolder(System.Web.UI.Control)">
+	<summary>
+ 很奇怪, New UW.Template(ph) 不能接著乎叫 Function 或 Sub.
+ </summary>
+	<param name="ph"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.SubTemplate(System.String,System.Boolean,System.Boolean)">
+	<summary>
+ 請注意, 這個和 child 是不同的, 它不會自動加到 child 中.
+ </summary>
+	<param name="Key"></param>
+	<param name="IsRemoveTemplate"></param>
+	<param name="IsAddToChildrenForBuildAll"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.IsolateChildren(System.String)">
+	<summary>
+	</summary>
+	<param name="Keys">所有子 Template 的 Key</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.IsolateSingleChild(System.String)">
+	<summary>
+ 這個會傳回 Child 本身
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.Child(System.String,System.Boolean)">
+	<summary>
+ 會自動 Isolate, 並且找不到時會傳回 Nothing 
+ </summary>
+	<param name="Key"></param>
+	<param name="IsTryIsolate"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.ReplaceSubTemplate(System.String,UW.Template)">
+	<summary>
+ Template 尚未被 Isolate 出來之前使用.
+ </summary>
+	<param name="Key"></param>
+	<param name="otNew"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.ReplaceString2(System.String,System.String)">
+	<summary>
+ 自動幫 OldStr 加上 ##
+ </summary>
+	<param name="OldStr"></param>
+	<param name="NewStr"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.ReplaceStringWithFormAndQueryString">
+	<summary>
+ 先用 Form, 再用 Query String
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.InsertString(System.String)">
+	<summary>
+ 在 Template 之前新增字串
+ </summary>
+	<param name="Str"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.SetSelectedValue(System.String)">
+	<summary>
+ 請注意, value 要用小寫
+ </summary>
+	<param name="Value"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.SetCheckedValue(System.String)">
+	<summary>
+ 請注意, value 要用小寫
+ </summary>
+	<param name="Value"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template._bind(System.String,System.Data.DataTable,System.String)">
+	<summary>
+ 基本的bind Function
+ </summary>
+	<param name="tmp"></param>
+	<param name="dt"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.Bind(System.Data.DataRow,System.String,System.String)">
+	<summary>
+	</summary>
+	<param name="oRow"></param>
+	<param name="ExtendFields">可用 IsEmpty_XXX, IsNotEmpty_XXX, IsPositive_XXX, IsNotPositive_XXX, IsPositiveOrZero_XXX, IsNotPositiveOrZero_XXX, Is_XXX, IsNot_XXX</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.Bind(System.Data.DataTable,System.Int32,System.Int32,System.String,System.Int32,System.String,System.Collections.ArrayList,System.Collections.ArrayList,System.String,System.String)">
+	<summary>
+ Option 可以用 XXX_Option 包起來, 請參考 OptionReplace 的說明..
+ </summary>
+	<param name="DT"></param>
+	<param name="StartIndex"></param>
+	<param name="EndIndex"></param>
+	<param name="AlternateTemplate"></param>
+	<param name="SelectedId"></param>
+	<param name="SelectedTemplate"></param>
+	<param name="alBGCOLORs"></param>
+	<param name="alSwitchingClassNames">會取代名為 #SwitchingClassName# 的字串</param>
+	<param name="ExtendedFields">Is_, Is_Not_, IsPositiveOrZero_, IsNotPositiveOrZero_, IsPositive_, IsNotPositive_, IsEmpty_, IsNotEmpty_</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.RemoveChild(System.String)">
+	<summary>
+ key 可以傳入多個, 用逗號隔開
+ </summary>
+	<param name="Key"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.RemoveBlock(System.String,System.Boolean)">
+	<summary>
+ 給 HTML 註解式的 Block 使用, 請注意, 不要加 T 或 Template 哦 !! &lt;!--XXX Start--&gt;&lt;!--XXX End--&gt; 或 &lt;!--XXX S--&gt;&lt;!--XXX E--&gt;
+ </summary>
+	<param name="Key"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.CloneFromResultAndClearOriginalTemplate(System.Boolean,System.String)">
+	<summary>
+ 傳回 Clone 的 Template, 並把原 Template 的內容清空, 做為容器使用.
+ </summary>
+	<param name="IsCloneChild"></param>
+	<param name="NewSubTemplateKey"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.GetFile(System.String,System.Boolean,System.String,System.String,System.Boolean)">
+	<summary>
+	</summary>
+	<param name="FullFileName"></param>
+	<param name="IsUpdateUrl"></param>
+	<param name="DomainName"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.SetSelectedOption(System.String)">
+	<summary>
+ 請注意, template 中只能包括 option
+ </summary>
+	<param name="Value"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.alSwitchingClassNamesForDefaultUWAdminRows">
+	<summary>
+ 這個是 tabtr04 和 tabtr05 文換
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.GetResultFromTemplateAndDataTable(System.String,System.Data.DataTable,System.Int32,System.Int32,System.String,System.Int32,System.String,System.Collections.ArrayList,System.Collections.ArrayList,System.String,System.String)">
+	<summary>
+	</summary>
+	<param name="Template"></param>
+	<param name="DT"></param>
+	<param name="StartIndex"></param>
+	<param name="EndIndex"></param>
+	<param name="AlternateTemplate"></param>
+	<param name="SelectedId"></param>
+	<param name="SelectedTemplate"></param>
+	<param name="alBGCOLORs"> 會取代名為 #BGCOLOR# 的字串</param>
+	<param name="alSwitchingClassNames"> 會取代名為 #SwitchingClassName# 的字串</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.GetResultFromTemplateAndDataTableForTwoLayer(System.String,System.String,System.Data.DataTable,System.Int32,System.String,System.Int32,System.Int32)">
+	<summary>
+ OuterTemplate 必需包括 #Content#
+ </summary>
+	<param name="OuterTemplate"></param>
+	<param name="InnerTemplate"></param>
+	<param name="DT"></param>
+	<param name="CountPerLoop"></param>
+	<param name="EmptyTemplate"></param>
+	<param name="StartPosition"></param>
+	<param name="EndPosition"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.GetOptionsFromDataTable(System.String,System.Int32,System.String,System.String)">
+	<summary>
+ 適用於有 "Name", "Id", "OrderNo" 的 Table
+ </summary>
+	<param name="TableName"></param>
+	<param name="InitValue"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.ddlInitTemp(UW.Template,System.String,System.Type,System.Web.UI.WebControls.ListItem,System.Web.UI.WebControls.ListItem,System.String,System.String)">
+	<summary>
+ 暫時使用的 Function, 等 Peter 來了, 改用 Selection 的 Name
+ </summary>
+	<param name="oT"></param>
+	<param name="OptionKey">#XXX#</param>
+	<param name="EnumType"></param>
+	<param name="FirstLI"></param>
+	<param name="LastLI"></param>
+	<param name="SelectedValue"></param>
+	<param name="ExcludeValues">格式為 ,AA,BB,CC,DD,</param>
+	<remarks></remarks>
+</member><member name="M:UW.Template.OptionsFromEnumType(System.Type,System.Web.UI.WebControls.ListItem,System.Web.UI.WebControls.ListItem,System.String,System.String,System.String)">
+	<summary>
+	</summary>
+	<param name="EnumType"></param>
+	<param name="FirstLI"></param>
+	<param name="LastLI"></param>
+	<param name="SelectedValue"></param>
+	<param name="ExcludedValues"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.ddlInit(System.Type,System.Web.UI.WebControls.ListItem,System.Web.UI.WebControls.ListItem,System.String,System.String)">
+	<summary>
+ 本身的 Template 不使用, 把產生的 option 字串放在 Template 的位置.
+ </summary>
+	<param name="EnumType"></param>
+	<param name="FirstLI"></param>
+	<param name="LastLI"></param>
+	<param name="SelectedValue"></param>
+	<param name="ExcludeValues"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.ddlInit(UW.Template,System.String,System.Type,System.Web.UI.WebControls.ListItem,System.Web.UI.WebControls.ListItem,System.String,System.String)">
+	<summary>
+ Id 是 select 物件的 Id.
+ </summary>
+	<param name="oT"></param>
+	<param name="Id">select 物件的 Id.</param>
+	<param name="EnumType"></param>
+	<param name="FirstLI"></param>
+	<param name="LastLI"></param>
+	<param name="SelectedValue"></param>
+	<param name="ExcludeValues"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.replaceTag(System.String,System.String,System.Boolean)">
+	<summary>
+	</summary>
+	<param name="id"></param>
+	<param name="value"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.ReplaceForSpecialKey(System.String,System.String,System.Object,System.Boolean)">
+	<summary>
+	</summary>
+	<param name="strTemplate"></param>
+	<param name="Key">Is_, Is_Not_, IsPositiveOrZero_, IsNotPositiveOrZero_, IsPositive_, IsNotPositive_, IsEmpty_, IsNotEmpty_</param>
+	<param name="Value"></param>
+	<param name="IsDBNullZero"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.getTagByAnnotation(System.String,System.Int32,System.Int32)">
+	<summary>
+ getTagByAttr還不是很完整的時候先用這個撐一下。
+ </summary>
+	<param name="key"></param>
+	<param name="max"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.getElement(System.String,System.Int32)">
+	<summary>
+	</summary>
+	<param name="childStr"></param>
+	<param name="max"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.getChild(System.Int32,System.Int32)">
+	<summary>
+ 抓第index索引的Child
+ </summary>
+	<param name="index">序號</param>
+	<param name="max"></param>
+	<returns></returns>
+	<remarks>
+	</remarks>
+</member><member name="M:UW.Template.getTagArrayByTagName(System.String,System.Int32)">
+	<summary>
+	</summary>
+	<param name="tagName"></param>
+	<param name="max"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.getChildren(System.Int32)">
+	<summary>
+ 抓Result的所有第一層chlidren
+ </summary>
+	<param name="max"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.GetOptionsFromENUM(System.Type,System.Int32,System.String)">
+	<summary>
+	</summary>
+	<param name="EnumType"></param>
+	<param name="InitValue"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.GetTemplateFromString(System.String@,System.String,System.Boolean)">
+	<summary>
+ 可以和 ReplaceTemplateInString 一起使用
+ </summary>
+	<param name="Source"></param>
+	<param name="Key"></param>
+	<param name="IsRemoveTemplate"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.BuildPlaceHolderWithDatatable(System.Web.UI.WebControls.PlaceHolder,System.Data.DataTable,System.Collections.ArrayList,System.String)">
+	<summary>
+	</summary>
+	<param name="ph"></param>
+	<param name="dt"></param>
+	<param name="alSwitchingClassNames">可以考慮使用 UW.Template.alSwitchingClassNamesForDefaultUWAdminRows</param>
+	<remarks></remarks>
+</member><member name="M:UW.Template.ReplaceKeywordInPlaceHolder(System.Web.UI.WebControls.PlaceHolder,System.String,System.String)">
+	<summary>
+	</summary>
+	<param name="ph"></param>
+	<param name="Keyword">這裡不會幫 Keyword 加上 #</param>
+	<param name="Value"></param>
+	<remarks></remarks>
+</member><member name="M:UW.Template.GetFirstLiteralControlWithTemplateKey(System.Web.UI.Control,System.String)">
+	<summary>
+ 這不是一個有效率的 function, 不要常常用哦 !! 有空再來想一個 Cache 的方法.
+ </summary>
+	<param name="oControl"></param>
+	<param name="Key"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.GetTemplateFromControlBaseOnLiteralControl(System.Web.UI.Control,System.String)">
+	<summary>
+ 這不是一個有效率的 function, 不要常常用哦 !! 有空再來想一個 Cache 的方法.
+ </summary>
+	<param name="oControl"></param>
+	<param name="Key"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.GetSubTemplateFromControlBaseOnLiteralControl(System.Web.UI.Control,System.String)">
+	<summary>
+ 僅取得 Template 範圍內的字串所組成的物件, 而不要整個 Literal Control
+ </summary>
+	<param name="oControl"></param>
+	<param name="Key"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.Build">
+	<summary>
+ 把 template 的文字填入 place holder 或是 literal control
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UW.Template.BuildALL">
+	<summary>
+ 這和會 Bind Parent Template, 並且一直向上 Bind.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UW.Template.BuildChildren">
+	<summary>
+ 把 Child 加回來
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UW.Template.getIniTagByAttr(System.String,System.String,System.Int32)">
+	<summary>
+ 從HTML物件中抓第一個屬性是attrName="attrValue"
+ </summary>
+	<param name="attrName">HTML 屬性名稱</param>
+	<param name="attrValue">HTML 屬性值</param>
+	<remarks>HTML記得以小寫書寫，改版後沒辦法大小寫不分辨。
+ 目前想不到方法抓屬性多個值，正則效能不好。</remarks>
+</member><member name="M:UW.Template.getIniTagById(System.String)">
+	<summary>
+ 抓id值的開頭Tag
+ </summary>
+	<param name="id">HTML id值大小有別</param>
+	<returns></returns>
+	<remarks>請丟ID</remarks>
+</member><member name="M:UW.Template.getTagByAttr(System.String,System.String,System.Int32,System.Int32)">
+	<summary>
+ 抓符合attrName=attrValue的Tag
+ </summary>
+	<param name="attrName">屬性名稱大小寫有別</param>
+	<param name="attrValue">屬性質大小寫有別</param>
+	<param name="startPos">開始位置初始值為0</param>
+	<param name="max">抓封閉Tag的層數預設超過二十層會丟exception</param>
+	<returns></returns>
+</member><member name="M:UW.Template.getTagById(System.String)">
+	<summary>
+ 抓取Id符合條件的Tag
+ </summary>
+	<param name="id"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.getParent(System.String,System.Int32,System.Boolean)">
+	<summary>
+ 抓上一層的父Tag
+ </summary>
+	<param name="idOrTag"></param>
+	<param name="max"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.renderPager(System.String,UW.SQL.PageDT2,System.String,System.String,System.String,System.String,System.Boolean,System.String,System.Int32,System.Int32)">
+	<summary>
+ 這個是比較新的做法就是 頁數用CLASS來做 2012年就會轉換成renderPager取代現有的
+ </summary>
+	<param name="id"></param>
+	<param name="currentPageClass"></param>
+	<param name="normalPageClass"></param>
+	<param name="nextPageClass"></param>
+	<param name="prePageClass"></param>
+	<param name="autoHideOthers"></param>
+	<param name="rootlink"></param>
+	<param name="limit"></param>
+	<param name="spreadNumber"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.getTagArrayByAttr(System.String,System.String,System.Int32)">
+	<summary>
+ 抓取符合attrName=attrValue的物件集合
+ </summary>
+	<param name="attrName">屬性名稱 大小有別</param>
+	<param name="attrValue">屬性值 大小有別</param>
+	<param name="max">最大集合長度</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.AddCSS(System.String)">
+	<summary>
+ 會加在 Template 開頭的位置
+ </summary>
+	<param name="URL"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Template.AddJS(System.String)">
+	<summary>
+ 會加在 Template 開頭的位置
+ </summary>
+	<param name="URL"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="F:UW.ExceptionUtil.MessageLevel.DebugWriteLine">
+	<summary>
+ 只在 Debug Mode 時使用 Response.Write 寫出訊息
+ </summary>
+	<remarks></remarks>
+</member><member name="F:UW.ExceptionUtil.MessageLevel.ShowDebugMessage">
+	<summary>
+ 只在 Debug Mode 時使用 uw.wu.ShowMessage 用 alert 顯示訊息
+ </summary>
+	<remarks></remarks>
+</member><member name="F:UW.ExceptionUtil.MessageLevel.WriteLine">
+	<summary>
+ 在正式環境也會用 Response.Write 寫出訊息。
+ </summary>
+	<remarks></remarks>
+</member><member name="F:UW.ExceptionUtil.MessageLevel.ShowMessage">
+	<summary>
+ 在正式環境時使用 uw.wu.ShowMessage 用 alert 顯示訊息
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UW.WU.ReplaceStringInControl(System.Web.UI.Control,System.String,System.String)">
+	<summary>
+ 向下遞迴, 找 literal contrl 中相同的字串做取代的動做
+ </summary>
+	<param name="oControl"></param>
+	<param name="OldString"></param>
+	<param name="NewString"></param>
+	<remarks></remarks>
+</member><member name="M:UW.WU.RemoveBlockInControl(System.Web.UI.Control,System.String)">
+	<summary>
+ 使用 S 和 E 的 HTML 註解包起來的區塊
+ </summary>
+	<param name="oControl"></param>
+	<param name="Key"></param>
+	<remarks></remarks>
+</member><member name="M:UW.WU.GetValueFromQueryStringOrForm(System.String,System.Boolean,System.Boolean)">
+	<summary>
+	</summary>
+	<param name="Key"></param>
+	<param name="IsReturnNothing">若為 False 則傳回空字串 ""</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.WU.GetValueFromQueryStringOrFormForSQLString(System.String,System.Boolean)">
+	<summary>
+ 會把 ' 取代成 ''
+ </summary>
+	<param name="Key"></param>
+	<param name="IsThrowExceptionIfNothing"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.WU.GetValueFromQueryStringOrFormForSQLTableNameOrFieldName(System.String)">
+	<summary>
+ 會把字串中的 "[" 和 "]" 拿掉, 並且在左右加上 [], 以 Form 優先 
+ </summary>
+	<param name="Key"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.WU.GetValueFromFormOnly(System.String,System.Boolean,System.Boolean)">
+	<summary>
+	</summary>
+	<param name="Key"></param>
+	<param name="IsReturnNothing">若為 False 則傳回空字串 ""</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.WU.BindAllItem(System.Web.UI.Control,UW.DB.Record2,System.String,System.Boolean,System.String)">
+	<summary>
+ 物件可以 db_ 開頭，或是取名和欄位相同。
+ </summary>
+	<param name="Ctrl"></param>
+	<param name="oRec"></param>
+	<param name="UrlImgRoot"></param>
+	<param name="IsNBSPForTD"></param>
+	<param name="ContentToHTMLFields"></param>
+	<remarks></remarks>
+</member><member name="M:UW.WU.FileProcess(System.Web.UI.WebControls.FileUpload,System.String,System.String,System.Boolean,System.String,System.Boolean)">
+	<summary>
+	</summary>
+	<param name="oFU"></param>
+	<param name="SavePath"></param>
+	<param name="SecondPartOfFilename"></param>
+	<param name="IsAddYearMonthAfterPath"></param>
+	<param name="Exts">,jpg,jpeg,zip,..., 記得前後都要加逗號</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:UW.WU.URL_PathOnly(System.String)">
+	<summary>
+	</summary>
+	<param name="AbsolutePath">可傳入絕對路徑</param>
+	<value></value>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.WU.ImgTag(System.String,System.String,System.Int32,System.Int32,System.Int32,System.String,System.String)">
+	<summary>
+	</summary>
+	<param name="URL"></param>
+	<param name="title"></param>
+	<param name="Width"></param>
+	<param name="Height"></param>
+	<param name="Border">Default is set to 0</param>
+	<param name="CSS"></param>
+	<param name="Style"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.WU.ShowMessageAtEnd(System.Web.UI.Page,System.String,System.String)">
+	<summary>
+	</summary>
+	<param name="Page"></param>
+	<param name="Message"></param>
+	<param name="AdditionalScript">可以用 UW.WU.CloseFancyBoxScript() 來關掉 fancy box</param>
+	<remarks></remarks>
+</member><member name="M:UW.WU.ShowMessageAtEnd(UW.Template,System.String)">
+	<summary>
+ otMaster 必需要有 BeforeBodyEnd 的區塊 !!
+ </summary>
+	<param name="otMaster"></param>
+	<param name="Message"></param>
+	<remarks></remarks>
+</member><member name="M:UW.WU.RegisterStartupScript(System.Web.UI.Page,System.String)">
+	<summary>
+ 不需要包含 script 的 Tag
+ </summary>
+	<param name="Script"></param>
+	<remarks></remarks>
+</member><member name="M:UW.WU.RunScriptInStartup(System.Web.UI.Page,System.String)">
+	<summary>
+ 不需要包含 script 的 Tag
+ </summary>
+	<param name="Page"></param>
+	<param name="Script">不需要包含 script 的 Tag</param>
+	<remarks></remarks>
+</member><member name="M:UW.WU.AddStartupScript(System.Web.UI.Page,System.String)">
+	<summary>
+ 不需要包含 script 的 Tag
+ </summary>
+	<param name="Page"></param>
+	<param name="Script"></param>
+	<remarks></remarks>
+</member><member name="M:UW.WU.ShowMessageAndCloseFancyBox(System.String)">
+	<summary>
+ parent.$.fancybox.close()
+ </summary>
+	<param name="Message"></param>
+	<remarks></remarks>
+</member><member name="M:UW.WU.ShowMessageAndRunScriptAndClose(System.String,System.String,System.Boolean)">
+	<summary>
+	</summary>
+	<param name="Message"></param>
+	<param name="Script"> 不需要 Script 的 Tag </param>
+	<remarks></remarks>
+</member><member name="M:UW.WU.LBInit(System.Web.UI.WebControls.ListBox,System.Data.DataTable,System.String,System.String,System.String)">
+	<summary>
+	</summary>
+	<param name="LB"></param>
+	<param name="DT"></param>
+	<param name="DataTextField"></param>
+	<param name="DataValueField"></param>
+	<param name="Values"></param>
+	<remarks></remarks>
+</member><member name="M:UW.WU.ddlSort(System.Web.UI.WebControls.DropDownList,System.Web.UI.WebControls.ListItem,System.Web.UI.WebControls.ListItem)">
+	<summary>
+ 要注意開頭空白哦
+ </summary>
+	<param name="DDL"></param>
+	<param name="FirstLI"></param>
+	<param name="LastLI"></param>
+	<remarks></remarks>
+</member><member name="M:UW.WU.ddlInitForDTwithThreeFields(System.Web.UI.WebControls.DropDownList,System.Data.DataTable,System.String,System.String,System.String,System.Web.UI.WebControls.ListItem,System.Web.UI.WebControls.ListItem,System.String,System.Boolean,System.Boolean)">
+	<summary>
+	</summary>
+	<param name="DDL"></param>
+	<param name="DT">請注意，DT 會被修改</param>
+	<param name="PrefixField">保留 OrderNo 會自動檢查 Order_No 是否存在</param>
+	<param name="TextField"></param>
+	<param name="ValueField"></param>
+	<remarks></remarks>
+</member><member name="M:UW.WU.ddlInit(System.Web.UI.WebControls.DropDownList,System.Data.DataTable,System.String,System.String,System.Web.UI.WebControls.ListItem,System.Web.UI.WebControls.ListItem,System.String,System.Boolean,System.Boolean,System.String)">
+	<summary>
+ 若是 DT 中有 Name 和 Id 欄位而沒有 Text 和 Value 兩個欄位, 使用預設的 Text 和 Value 會自動轉換成 Name 和 Id
+ </summary>
+	<param name="DDL"></param>
+	<param name="DT"></param>
+	<param name="DataTextField"></param>
+	<param name="DataValueField"></param>
+	<param name="FirstLI"></param>
+	<param name="LastLI"></param>
+	<param name="Value"></param>
+	<param name="ClearOldItems"></param>
+	<param name="IsReadOnly"></param>
+	<param name="BackupFieldNameForText"></param>
+	<remarks></remarks>
+</member><member name="M:UW.WU.ddlInit(System.Web.UI.WebControls.DropDownList,System.Type,System.Web.UI.WebControls.ListItem,System.Web.UI.WebControls.ListItem,System.String,System.Boolean,System.String)">
+	<summary>
+ Example: UW.WU.ddlInit(Me.ddlPosition, GetType(EN.AdPosition), New ListItem("請選擇", ""))
+ </summary>
+	<param name="DDL"></param>
+	<param name="EnumType"></param>
+	<param name="FirstLI"></param>
+	<param name="LastLI"></param>
+	<param name="Value"></param>
+	<param name="ClearOldItems"></param>
+	<remarks></remarks>
+</member><member name="M:UW.WU.GetIDFromQueryString(System.Boolean,System.Boolean)">
+	<summary>
+ 沒有 Id 時, 會依傳入參數順序決定沒有 Id 時的做法, 都為 False 時, 會傳回 -1
+ </summary>
+	<param name="IsGoBack"></param>
+	<param name="IsThrowException"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.WU.SessionStatus_LoadValue(System.Web.UI.Control,System.Boolean)">
+	<summary>
+	</summary>
+	<param name="Control"></param>
+	<param name="ForceShow"> DDL 無法比對時, 用 Debug.WriteLin 寫出錯誤 !!</param>
+	<remarks></remarks>
+</member><member name="M:UW.WU.LinkForStyle(System.String)">
+	<summary>
+ 這個 Function 的路徑會以 Header 所有的位置做為參考，所以指定同一目錄下的 css 時要注意
+ </summary>
+	<param name="FileName"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.WU.GetRequestValueInContentElement(System.String,System.String)">
+	<summary>
+ 暫用 Function ，目前還是不知道怎麼抓到 Content 物件的 ID
+ </summary>
+	<param name="Key"></param>
+	<param name="Prefix"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.WU.GetRequestFromContentElement(System.Web.UI.WebControls.WebControl)">
+	<summary>
+ 直接由 Request 中取得物件的值
+ </summary>
+	<param name="WC"> Web Control </param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.WU.GetRequestFromUserControl(System.Web.UI.UserControl,System.String)">
+	<summary>
+ 在 User Control 中，直接由 Request 中取得物件的值
+ </summary>
+	<param name="UC">User Control，通常是 me</param>
+	<param name="ObjectID">在 User Control 中的物件 ID</param>
+	<returns>可能會傳回 nothing</returns>
+	<remarks></remarks>
+</member><member name="M:UW.WU.IsVisitInXMinutesBySession(System.Int32,System.String)">
+	<summary>
+	</summary>
+	<param name="X"></param>
+	<param name="Key">預設值是目前網址</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.SQL.PageDT2.FirstRecordPosition">
+	<summary>
+ 從 1 開始
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.SQL.PageDT2.LastRecordPosition">
+	<summary>
+ 從 1 開始
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.SQL.GetTableNameOrFieldNameAfterReplacementAndEnclose(System.String)">
+	<summary>
+ [ ] - ' 都會被拿掉, 並且用 [] 把欄位名稱或資料表名稱包起來
+ </summary>
+	<param name="OriginalTableName"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.SQL.GetStringFromQueryStringOrForm(System.String)">
+	<summary>
+ 會把 ' 取代成 ''
+ </summary>
+	<param name="Key"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.SQL.GetSingleDecimalWithDefault(System.String,System.Data.SqlClient.SqlTransaction,System.Decimal)">
+	<summary>
+	</summary>
+	<param name="sql"></param>
+	<param name="Tran">可以傳入 Nothing </param>
+	<param name="DefaultValue"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.SQL.InsertSysLog(System.Int32,System.String,System.Int32,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ 寫入系統記錄資料表。
+ </summary>
+	<param name="RID"></param>
+	<param name="TableName">資料表名稱</param>
+	<param name="Member_Id">通常用 SC.WSC.MemberId</param>
+	<param name="tran"></param>
+	<remarks></remarks>
+</member><member name="M:UW.SQL.InsertSysLog(System.String,System.Int32,System.String,System.Int32,System.Data.SqlClient.SqlTransaction)">
+	<summary>
+ 寫入系統記錄資料表。
+ </summary>
+	<param name="OldDataSQL"></param>
+	<param name="r_id"></param>
+	<param name="table_name"></param>
+	<param name="Member_Id"></param>
+	<param name="tran"></param>
+	<remarks></remarks>
+</member><member name="M:UW.SQL.UpdateSql(System.String,System.Collections.Hashtable,System.Collections.Hashtable,System.String,System.String,System.String)">
+	<summary>
+	</summary>
+	<param name="TableName"></param>
+	<param name="htTypes"></param>
+	<param name="htFields">htFields 中，nothing 代表 null</param>
+	<param name="Where"></param>
+	<param name="AdditionalUpdate">AdditionalUpdate 前後的逗號會被刪掉</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.SQL.InsertSql(System.String,System.Collections.Hashtable,System.Collections.Hashtable,System.String,System.String,System.String)">
+AdditionalFields 和 AdditionalValues 前後不包括逗號
+htFields 中，nothing 代表 null
+
+</member><member name="M:UW.SQL.QuerySql(System.String,System.String,System.Collections.Hashtable,System.Collections.Hashtable,System.Collections.Hashtable,System.Collections.Hashtable,System.Collections.Hashtable,System.Collections.Hashtable,System.Collections.Hashtable,System.String,System.String,System.String,System.String,System.Boolean)">
+	<summary>
+ 請注意, 會自動加入 With (NoLock) 的關鍵字, 若要取消, 請設定 IsWithNoLock 的條件  Bike, 20110714
+ </summary>
+	<param name="TableName"></param>
+	<param name="Fields"></param>
+	<param name="htTypes"></param>
+	<param name="htEqual"></param>
+	<param name="htStart"></param>
+	<param name="htEnd"></param>
+	<param name="htStartOrEqual"></param>
+	<param name="htEndOrEqual"></param>
+	<param name="htLike"></param>
+	<param name="AdditionalCriteria"></param>
+	<param name="OrderByStr"></param>
+	<param name="BeforeFieldsDesc"></param>
+	<param name="strJoin"></param>
+	<param name="IsWithNoLock"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.SQL.QuerySqlCritiria(System.Collections.Hashtable,System.Collections.Hashtable,System.Collections.Hashtable,System.Collections.Hashtable,System.Collections.Hashtable,System.Collections.Hashtable,System.Collections.Hashtable,System.String)">
+	<summary>
+ 沒有 Where 
+ </summary>
+	<param name="htTypes"></param>
+	<param name="htEqual"></param>
+	<param name="htStart"></param>
+	<param name="htEnd"></param>
+	<param name="htStartOrEqual"></param>
+	<param name="htEndOrEqual"></param>
+	<param name="htLike"></param>
+	<param name="AdditionalCriteria"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="F:UW.PG_CSharp.Head1">
+	<summary>
+Head1 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG_CSharp.form1">
+	<summary>
+form1 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG_CSharp.txtClassName">
+	<summary>
+txtClassName 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG_CSharp.ddlDBC">
+	<summary>
+ddlDBC 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG_CSharp.txttableName">
+	<summary>
+txttableName 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG_CSharp.txtID">
+	<summary>
+txtID 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG_CSharp.ddlIdType">
+	<summary>
+ddlIdType 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG_CSharp.txtBasetableName">
+	<summary>
+txtBasetableName 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG_CSharp.txtPassword">
+	<summary>
+txtPassword 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG_CSharp.btnGetfields">
+	<summary>
+btnGetfields 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG_CSharp.btnGetFieldAndGenerateCode">
+	<summary>
+btnGetFieldAndGenerateCode 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG_CSharp.btnResultFromFields">
+	<summary>
+btnResultFromFields 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG_CSharp.cbTail">
+	<summary>
+cbTail 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG_CSharp.cbNamespace">
+	<summary>
+cbNamespace 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG_CSharp.tblFiels">
+	<summary>
+tblFiels 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG_CSharp.table1">
+	<summary>
+table1 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG_CSharp.txtFieldAndType">
+	<summary>
+txtFieldAndType 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG_CSharp.btnGenerate">
+	<summary>
+btnGenerate 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG_CSharp.lblPG">
+	<summary>
+lblPG 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG_CSharp.txtRes">
+	<summary>
+txtRes 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG_CSharp.lblVB">
+	<summary>
+lblVB 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG_CSharp.txtVBRes">
+	<summary>
+txtVBRes 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="T:UW.SC">
+	<summary>
+ Security Component
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UW.ImageUtil.ResizeImage(System.String,System.String,System.Single,System.Single,System.String,System.Int32,System.Int32,System.Int32,System.Int32,System.Boolean,System.Int32,System.Boolean,System.Boolean,System.Int32)">
+	<summary>
+	</summary>
+	<param name="Ori_FileName"></param>
+	<param name="dest_FileName"></param>
+	<param name="MaxW"></param>
+	<param name="MaxH"></param>
+	<param name="Mark"></param>
+	<param name="ResizeSharpenAmount">縮圖用的預設 SharpAmount，不需縮圖時不會使用。但若有設定 SharpenAmount 時，以 SharpenAmount 優先。</param>
+	<param name="SharpenAmount">強迫銳利化，不論是否縮圖皆會使用。</param>
+	<param name="Quality"></param>
+	<param name="Interpolation"></param>
+	<param name="IsForceSave"></param>
+	<param name="MaxFileSize"></param>
+	<param name="CheckFileSizeOnly"></param>
+	<remarks></remarks>
+</member><member name="M:UW.ImageUtil.ResizeAndGetFilenameWithDrawingLiberary(System.String,System.String,System.Int32,System.Int32,System.Boolean)">
+	<summary>
+ 傳入 Test.jpg ，傳回  Test_100x200.jpg ，使用這個可能要配合 Cache，以免過多的 IO，目前只處理 JPG 的檔案
+ </summary>
+	<param name="Path">必需以 \ 結束</param>
+	<param name="FileName"></param>
+	<param name="MaxWidth"></param>
+	<param name="MaxHeight"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.ImageUtil.ResizeAndGetFilenameWithASPJPEG(System.String,System.String,System.Int32,System.Int32,System.Int32,System.Int32)">
+	<summary>
+ 傳入 Test.jpg ，傳回  Test_100x200.jpg ，使用這個可能要配合 Cache，以免過多的 IO，目前只處理 JPG 的檔案
+ </summary>
+	<param name="Path">必需以 \ 結束</param>
+	<param name="FileName"></param>
+	<param name="MaxWidth"></param>
+	<param name="MaxHeight"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.ImageUtil.flash(System.Int32,System.Int32,System.String)">
+	<summary>
+ 顯示Flash
+ </summary>
+	<param name="W"></param>
+	<param name="H"></param>
+	<param name="ImgURL">ex: /Upload/AdImages/PicName</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.ImageUtil.ImgTag(System.Int32,System.Int32,System.String,System.Int32,System.String,System.String)">
+	<summary>
+ 顯示Img Tag
+ </summary>
+	<param name="W"></param>
+	<param name="H"></param>
+	<param name="ImgURL">ex: /Upload/AdImages/PicName</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.DB.Record.SetNull(System.String)">
+	<summary>
+ 給 Update 用的，因為 Int32 傳入 nothing 好像會有問題
+ </summary>
+	<param name="FieldName"></param>
+	<remarks></remarks>
+</member><member name="M:UW.FormUtil.SetMatchedColumnWithDefaultUpdate(System.Web.UI.Control,UW.DB.Record2,System.String,System.Boolean,System.String,UW.EN.ThreeSatatBoolean_ForConfig,System.String,System.String,System.String,System.Boolean,System.Boolean)">
+	<summary>
+ Pic 和 File 開頭的欄位預設不更新，其它的欄位預設要更新，字串型的，預設更新為空白字串，數字和日期型的，預設更新為 null
+ </summary>
+	<param name="phContent"></param>
+	<param name="oRec"></param>
+	<param name="StoreFilePath"></param>
+	<param name="IsCreatePath"></param>
+	<param name="Extension"></param>
+	<param name="IsKeepOriginalFileName"></param>
+	<param name="FieldsToSetNullWithEmptyString">特別要更新為 null 的欄位</param>
+	<param name="FieldsToSetToEmptyStringWithEmptyString">給 file 和 pic 開頭的欄位用</param>
+	<param name="FieldsNotToUpdateWithEmptyString">不要更新的欄位</param>
+	<remarks></remarks>
+</member><member name="M:UW.FormUtil.SetMatchedColunm(UW.DB.Record2,System.Boolean,System.Boolean,System.Boolean,System.String,System.String,UW.EN.ThreeSatatBoolean_ForConfig,System.String)">
+	<summary>
+ 直接從 Form 或 QueryString 讀取資料
+ </summary>
+	<param name="oRec"></param>
+	<param name="IsIncludeId"></param>
+	<remarks></remarks>
+</member><member name="M:UW.FormUtil.SetMatchedColunm(System.Web.UI.Control,UW.DB.Record2,System.String,System.Boolean,System.String,UW.EN.ThreeSatatBoolean_ForConfig,System.String,System.String,System.Boolean,System.Boolean,System.Boolean,System.Boolean,UW.DB.Record2,System.Boolean)">
+	<summary>
+ 請注意，不知何時加了一個 AllowSWF(Boolean) 的參數會造成問題，使用到此 Function 的都需要 Compile 一下，最後一個參數是 IsAddFileSequence，IsAddFileSequence 之後最好不要傳入Bolean, 文字等參數。
+ </summary>
+	<param name="phContent"></param>
+	<param name="oRec"></param>
+	<param name="StoreFilePath"></param>
+	<param name="IsCreatePath"></param>
+	<param name="Extension"></param>
+	<param name="IsKeepOriginalFileName"></param>
+	<param name="FieldsToSetNullWithEmptyString">This should be start and end with comma, or you can set it to ALL</param>
+	<param name="Dummy">一個假的變數，取代 AllowSWF 的代置，以便讓舊的程式產生 Compile 的錯誤。</param>
+	<remarks></remarks>
+</member><member name="M:UW.FormUtil.SetMatchedColunm(System.Web.UI.Control,UW.DB.Record,System.Collections.Hashtable,System.String,System.Boolean,System.String,UW.EN.ThreeSatatBoolean_ForConfig,System.String)">
+	<summary>
+ 相容從 1.1 版轉換過來的專案使用
+ </summary>
+	<param name="phContent"></param>
+	<param name="oRec"></param>
+	<param name="htTypeDefines"></param>
+	<param name="StoreFilePath"></param>
+	<param name="IsCreatePath"></param>
+	<param name="Extension"></param>
+	<param name="IsKeepOriginalFileName"></param>
+	<param name="SubFolder"></param>
+	<remarks></remarks>
+</member><member name="M:UW.FormUtil.LoadMatchedColumn(System.Web.UI.Control,UW.DB.Record,System.Boolean,System.String)">
+	<summary>
+ 相容 1.1 版轉換過來的專案使用
+ </summary>
+	<param name="phContent"></param>
+	<param name="oRec"></param>
+	<param name="IsThrowExceptionForDDLNotMatch"></param>
+	<param name="ImageFolderURL"></param>
+	<remarks></remarks>
+</member><member name="F:UW.PG2000.Head1">
+	<summary>
+Head1 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2000.form1">
+	<summary>
+form1 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2000.txtClassName">
+	<summary>
+txtClassName 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2000.ddlDBType">
+	<summary>
+ddlDBType 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2000.ddlDBC">
+	<summary>
+ddlDBC 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2000.txttableName">
+	<summary>
+txttableName 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2000.txtID">
+	<summary>
+txtID 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2000.ddlIdType">
+	<summary>
+ddlIdType 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2000.txtBasetableName">
+	<summary>
+txtBasetableName 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2000.txtPassword">
+	<summary>
+txtPassword 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2000.btnGetfields">
+	<summary>
+btnGetfields 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2000.btnResultFromFields">
+	<summary>
+btnResultFromFields 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2000.cbTail">
+	<summary>
+cbTail 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2000.cbAddNameSpace">
+	<summary>
+cbAddNameSpace 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2000.tblFiels">
+	<summary>
+tblFiels 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2000.table1">
+	<summary>
+table1 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2000.txtFieldAndType">
+	<summary>
+txtFieldAndType 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2000.btnGenerate">
+	<summary>
+btnGenerate 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2000.lblPG">
+	<summary>
+lblPG 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2000.txtRes">
+	<summary>
+txtRes 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2000.lblVB">
+	<summary>
+lblVB 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.PG2000.txtVBRes">
+	<summary>
+txtVBRes 控制項。
+</summary>
+	<remarks>
+自動產生的欄位。
+將移動欄位宣告從設計檔案修改為程式碼後置檔案。
+</remarks>
+</member><member name="F:UW.DB.RecordEditCofiguration.MaxLength">
+	<summary>
+ 給 TextBox 使用, 設定最大輸入字數
+ </summary>
+	<remarks></remarks>
+</member><member name="F:UW.DB.RecordEditCofiguration.IsRequire">
+	<summary>
+ 本欄位是否必填, 會新增一個 Request Validator
+ </summary>
+	<remarks></remarks>
+</member><member name="F:UW.DB.RecordEditCofiguration.RequireMessage">
+	<summary>
+ 未填寫時出現的訊息
+ </summary>
+	<remarks></remarks>
+</member><member name="F:UW.DB.RecordEditCofiguration.IsIntegerOnly">
+	<summary>
+ 限制只可以輸入整數, 會新增一個 Regular Expression Validator
+ </summary>
+	<remarks></remarks>
+</member><member name="F:UW.DB.RecordEditCofiguration.IsDateOnly">
+	<summary>
+ 限制只能輸入日期, 會新增一個 Compare Validator
+ </summary>
+	<remarks></remarks>
+</member><member name="F:UW.DB.RecordEditCofiguration.IsFloatOnly">
+	<summary>
+ 限制只可以輸入浮點數, 會新增一個 Regular Expression Validator
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UW.DB.Record2.#ctor(System.String,System.Data.SqlClient.SqlTransaction,System.Data.SqlClient.SqlConnection,System.String,System.Boolean,System.String)">
+	<summary>
+ IsReadWithNoLock 預設 True, 在 Tran, Conn 有傳入時無作用
+ </summary>
+	<param name="Id"></param>
+	<param name="Tran"></param>
+	<param name="Conn"></param>
+	<param name="Fields"></param>
+	<param name="IsReadWithNoLock"></param>
+	<param name="ViewName">可以指定特別的 View 或是使用 BaseTable, 以減少資料傳輸的量.</param>
+	<remarks></remarks>
+</member><member name="M:UW.DB.Record2.SetNull(System.String)">
+	<summary>
+ 給 Update 用的，因為 Int32 傳入 nothing 好像會有問題
+ </summary>
+	<param name="FieldName"></param>
+	<remarks></remarks>
+</member><member name="M:UW.DB.Record2.Update(System.Int32,System.Data.SqlClient.SqlTransaction,System.String,UW.EN.ThreeSatatBoolean_ForConfig,UW.EN.ThreeSatatBoolean_ForConfig,System.Boolean,System.String,System.Data.SqlClient.SqlConnection,System.String)">
+	<summary>
+ 更新資料，並且自動記錄
+ </summary>
+	<param name="MemberId">更新者的 MemberId，傳入值小於或等於 0 代表不做系統記錄</param>
+	<param name="Tran"></param>
+	<param name="AdditionalUpdate"></param>
+	<param name="Is_Modify_Date_Update">把 Modify_Date 設為 getDate()，會檢查 htTypeDefinesForRecord 是否有 Modify_Date 這個欄位。預設為 true。</param>
+	<param name="Is_Modifier_Id_Update">把 Modifier_Id 設為 MemberId，會檢查 htTypeDefinesForRecord 是否有 Modifier_Id 這個欄位。預設為 true。</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="F:UW.DB.Record2.AdditionalCritiria_InRecord">
+	<summary>
+ 請注意, 這裡不會檢查 SQL Injection, 要自行檢查 ...
+ 可以設定這個值, 在 QuerySQL 及 GetPageDT 時使用, 但以額外傳入的優先.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UW.DB.Record2.AddCriteria(System.String)">
+	<summary>
+ 新增的 Criteria 會用 And 併入原有的查詢條件中
+ </summary>
+	<param name="Criteria"></param>
+	<remarks></remarks>
+</member><member name="M:UW.DB.Record2.QuerySql(System.String,System.String,System.String,System.String,System.String,System.Boolean,System.Boolean)">
+	<summary>
+ 請注意, 會自動加入 With (NoLock) 的關鍵字, 若要取消, 請設定 IsWithNoLock 的條件  Bike, 20110714
+ </summary>
+	<param name="AdditionalString"></param>
+	<param name="OrderByStr"></param>
+	<param name="BeforeFieldsDesc"></param>
+	<param name="Fields"></param>
+	<param name="strJoin"></param>
+	<param name="IsBaseTableOnly"></param>
+	<param name="IsWithNoLock"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.DB.Record2.QuerySqlCriteria(System.String)">
+	<summary>
+ 沒有 Where 
+ </summary>
+	<param name="AdditionalString"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.DB.Record2.GetQueryDT(System.Data.SqlClient.SqlTransaction,System.Data.SqlClient.SqlConnection,System.String,System.String,System.Boolean,System.String,System.String,System.String,System.Boolean,System.Boolean)">
+	<summary>
+ 注意, 預設會使用 with (NoLock), Bike 20110714
+ </summary>
+	<param name="Tran"></param>
+	<param name="Conn"></param>
+	<param name="AdditionalString">會和其它條件 And 起來，並用 () 包圍，在前方不需加入 And。</param>
+	<param name="IsFromCache">若為 True ，則會先檢查是否有做過查詢，直接用上次的結果。</param>
+	<param name="OrderByStr">只需欄位名稱。</param>
+	<param name="BeforeFieldsDesc"></param>
+	<param name="Fields"></param>
+	<param name="strJoin"></param>
+	<param name="IsBaseTableOnly"></param>
+	<param name="IsWithNoLock"></param>
+	<returns>Datatable</returns>
+	<remarks></remarks>
+</member><member name="M:UW.DB.Record2.GetDataRowAndReturnSelfOrNothing(System.Data.SqlClient.SqlTransaction,System.Data.SqlClient.SqlConnection,System.String,System.String,System.Boolean,System.String,System.String)">
+	<summary>
+ 它會重設 Row 和 htDirty
+ </summary>
+	<param name="Tran"></param>
+	<param name="Conn"></param>
+	<param name="AdditionalString"></param>
+	<param name="OrderByStr"></param>
+	<param name="IsFromCache"></param>
+	<param name="BeforeFieldsDesc"></param>
+	<param name="Fields"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.DB.Record2.UpdateWithRequest(System.String,UW.DB.Record2,System.Collections.ArrayList,System.Int32,System.String,System.String,System.Data.SqlClient.SqlConnection)">
+	<summary>
+	</summary>
+	<param name="Prefix"></param>
+	<param name="oRec"></param>
+	<param name="alFieldsForListAndUpdate"></param>
+	<param name="MemberId">可傳入 -1 表示不記錄 MemberId</param>
+	<remarks></remarks>
+</member><member name="M:UW.DB.Record2.InitTemplate(System.String,System.Collections.Hashtable,System.String,System.Boolean)">
+	<summary>
+ 初始化 Template, 會先使用 HT 中的資料, 以便優先填寫一些欄位. 把 #FieldName# 改為空白.
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UW.DB.Record2.InitWithRequest(System.String,UW.DB.Record2,System.Collections.ArrayList,System.String,System.String)">
+	<summary>
+ 這個是舊版本了, 請盡量不要使用
+ </summary>
+	<param name="Prefix"></param>
+	<param name="oRec"></param>
+	<param name="alFieldsForListAndUpdate"></param>
+	<param name="PostfixForNewRecord"></param>
+	<param name="PathForFiles"></param>
+	<remarks></remarks>
+</member><member name="M:UW.DB.Record2.TRForList(System.Collections.ArrayList,System.Collections.Hashtable,System.Boolean,System.String,System.String,System.String,System.String,System.String,System.String,System.Boolean,System.Boolean,System.Boolean,System.Collections.Hashtable,System.Int32,System.Int32,System.Int32)">
+	<summary>
+	</summary>
+	<param name="alFields"></param>
+	<param name="htTypeDefinesForRecord"></param>
+	<param name="IsNew"></param>
+	<param name="PostfixForNewRecord"></param>
+	<param name="AddKeyForButton">這裡面不可以有底線</param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.DB.Record2.AddURLToPicFields(System.String)">
+	<summary>
+ 對 pic 開頭的欄位, 在前方新增路徑.
+ 請注意大小寫, 只會對小寫的 pic 開頭的欄位有動作, 所以 Picture 之類的欄位不會有反應
+ </summary>
+	<param name="URL"></param>
+	<remarks></remarks>
+</member><member name="T:UW.DB.Record2">
+	<summary>
+ 特別欄位說明
+ Modify_Date: 修改日期
+ Modifier_Id: 修改人編號，理論上應該會和 Member 中的 Id 相關連
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UW.Request.SQLString(System.String)">
+	<summary>
+ 取出字串，並把 ' 轉換為 ''
+ </summary>
+	<param name="Key"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Request.SQLTable(System.String)">
+	<summary>
+ 把傳入值的 [, ], ' 拿掉，並自動用 [ ] 包起來
+ </summary>
+	<param name="Key"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Pager.GetQStringFromRequst">
+	<summary>
+ 這個前面不會有 ? 後面會自動加 and 符號
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Pager.GetPageHtml(System.Int32,System.Int32,System.String,System.String,System.Boolean,System.Boolean,System.Boolean,System.Boolean)">
+	<summary>
+	</summary>
+	<param name="TotalPage"></param>
+	<param name="CurrentPage"></param>
+	<param name="LinkCssName"></param>
+	<param name="QString"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="M:UW.Pager.GetPageFromQueryString">
+	<summary>
+ 用 System.Web.HttpContext.Current.Request.QueryString("Page") 取得目前頁數
+ </summary>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="T:UW.Pager.PageInfo">
+	<summary>
+ 計算分頁相關資料, 並會回傳分頁的HTML(以QueryString傳遞頁數)
+ </summary>
+	<remarks></remarks>
+</member><member name="T:UW.Pager.PageInfoWithDataTable">
+	<summary>
+ 計算分頁相關資料, 並會回傳分頁的HTML(以QueryString傳遞頁數)
+ </summary>
+	<remarks></remarks>
+</member><member name="M:UW.DateFns.Bissextile(System.Int32)">
+	<summary>
+ 檢查是否為閏年(有2/29)
+ </summary>
+	<param name="Year"></param>
+	<returns></returns>
+	<remarks></remarks>
+</member><member name="P:UW.My.MyWebExtension.Application">
+	<summary>
+ 傳回有關目前應用程式的資訊。
+ </summary>
+</member><member name="P:UW.My.MyWebExtension.Computer">
+	<summary>
+ 傳回主機電腦的相關資訊。
+ </summary>
+</member><member name="P:UW.My.MyWebExtension.User">
+	<summary>
+ 傳回目前 Web 使用者的資訊。
+ </summary>
+</member><member name="P:UW.My.MyWebExtension.Request">
+	<summary>
+ 傳回 Request 物件。
+ </summary>
+</member><member name="P:UW.My.MyWebExtension.Response">
+	<summary>
+ 傳回 Response 物件。
+ </summary>
+</member><member name="P:UW.My.MyWebExtension.Log">
+	<summary>
+ 傳回 Asp 記錄物件。
+ </summary>
+</member><member name="P:UW.My.MyWebExtension.WebServices">
+	<summary>
+ 提供對加入此專案之 WebServices 的存取。
+ </summary>
+</member><member name="T:UW.My.MyWebExtension">
+	<summary>
+ 用來定義可用於 Web 專案 My 命名空間中之屬性的模組。
+ </summary>
+	<remarks></remarks>
+</member><member name="P:UW.My.Resources.Resources.ResourceManager">
+	<summary>
+  Returns the cached ResourceManager instance used by this class.
+</summary>
+</member><member name="P:UW.My.Resources.Resources.Culture">
+	<summary>
+  Overrides the current thread's CurrentUICulture property for all
+  resource lookups using this strongly typed resource class.
+</summary>
+</member><member name="T:UW.My.Resources.Resources">
+	<summary>
+  A strongly-typed resource class, for looking up localized strings, etc.
+</summary>
+</member>
+</members>
+</doc>

@@ -1,0 +1,1 @@
+﻿<%@ Page Language="VB" AutoEventWireup="false" CodeFile="atm.aspx.vb" Inherits="test_atm" Debug="true" %>

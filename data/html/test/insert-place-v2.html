@@ -1,0 +1,417 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>PlanB</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="/js/lib/jquery-2.0.2.min.js"></script>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?libraries=places&key=AIzaSyCmua4N_rbg1YbNkFpGAVEO3hm_biGo3rY&sensor=true"></script>
+        <script type="text/javascript" src="/js/lib/jquery.lazyload.min.js"></script>
+        <script type="text/javascript">
+            var key = "AIzaSyCmua4N_rbg1YbNkFpGAVEO3hm_biGo3rY";
+            var map;
+            var pre_place_id= 0;
+            var next_place_id = 0;
+            var curr_place_id = 0;
+            var currPlace = null;
+            var infowindow = new google.maps.InfoWindow;
+            var markerArray = new Array();
+            var checkMarkerArray = new Array();
+            var detailReqArray = new Array();
+            var getGPDetailTimerArray = new Array();
+            var exp = "{EXP}";
+            function initialize() {
+                var chicago = new google.maps.LatLng(23.76020942503921, 120.970458984375);
+                var mapOptions = {
+                    zoom: 11,
+                    center: chicago,
+                    mapTypeId: google.maps.MapTypeId.ROADMAP
+                }
+                map = new google.maps.Map(document.getElementById('map-canvas'), mapOptions);
+            }
+            $(document).ready(function () {
+                $("img.lazy").lazyload({
+                    event: "winloaded"
+                });
+                generateLevel(exp);
+                $("body").bind("keydown", function (e) {
+                    $(".status").removeClass("warning");
+                    $(".status").removeClass("error");
+                    if (e.keyCode == 78) {
+                        getMarker(true);
+                    }else if(e.keyCode==80){
+                        getMarker(false);
+                    } else if (e.keyCode == 70) {
+                        var selectedEl = null;
+                        if ($("dl.list.selected").length > 0) {
+                            selectedEl = $("dl.list.selected").next();
+                        } else {
+                            selectedEl = $("dl.list:eq(0)");
+                        }
+                        $("dl.list.selected").removeClass("selected");
+                        
+                        if (selectedEl != null) {
+                            selectedEl.addClass("selected")
+                        } else {
+                            $("dl.list:eq(1)").addClass("selected");
+                        }
+                        selectedEl.trigger("select");
+                    } else if (e.keyCode == 68) {
+                        var selectedEl = null;
+                        if ($("dl.list.selected").length > 0) {
+                            selectedEl = $("dl.list.selected").prev();
+                        } else {
+                            selectedEl = $("dl.list").last();
+                        }
+                        $("dl.list.selected").removeClass("selected");
+                        selectedEl.addClass("selected")
+                        selectedEl.trigger("select");
+                    } else if (e.keyCode == 73) {
+                        if ($("dl.list.selected").length == 0) {
+                            $(".status").html("請選擇要塞入資料庫的資料。");
+                        } else {
+                            $("dl.list.selected .insert-button").trigger("click");
+                        }
+                    } else if (e.keyCode == 71) {
+                        $.ajax({
+                            url: "/controller/pre_data.aspx?action=ignore_place",
+                            type: "POST",
+                            data: ({ id: curr_place_id }),
+                            async:false,
+                            success: function (e) {
+                                getMarker(true);
+                            }
+                        })
+                    } else if (e.keyCode == 72) {
+                        switchHelp();
+                    }
+                })
+                $("body").delegate("dl.list.selected .insert-button", "click", function (e) {
+                    var par = $(e.currentTarget).parent().parent();
+                    var address = $("dd.address",par).html();
+                    var name = $("dt", par).html();
+                    var pos = par.data("pos");
+                    var desc = $("dd.description", par).html();
+                    var ref = par.data("ref");
+                    var id = par.data("id");
+                    var cates = par.data("cates");
+                    var main_cate = par.data("main-cate");
+                    var ratting=$("dd.rating",par).html().replace("評分:","");
+                    insertPlaceFromGoogle({
+                        address: address,
+                        pos: pos,
+                        name: name,
+                        desc: desc,
+                        ref: ref,
+                        id: id,
+                        cates: cates,
+                        rating:ratting,
+                        main_cate:main_cate
+                    });
+                })
+                $("body").delegate("dl.list", "click", function (e) {
+                    $("dl.list").removeClass("selected");
+                    $(e.currentTarget).addClass("selected")
+                    $(e.currentTarget).trigger("select");
+                })
+                $("body").delegate(".link-from-json", "click", function (e) {
+                    insertPlaceFromJSON(curr_place.address,curr_place.pos,curr_place.name,curr_place.desc,"",curr_place.id);
+                    return false;
+                })
+                $("body").delegate("dl.list", "select", function (e) {
+                    for (var i = 0; i < checkMarkerArray.length; i++) {
+                        if ($(e.currentTarget).data("id") == checkMarkerArray[i].id) {
+                            checkMarkerArray[i].marker.setIcon("http://www.planb-on.com/img/select-pin.png");
+                            map.setCenter(checkMarkerArray[i].marker.position);
+                            map.setZoom(15);
+                        } else {
+                            checkMarkerArray[i].marker.setIcon("http://www.planb-on.com/img/pin.png");
+                        }
+                    }
+
+                })
+                $(".status").html("讀取資料。 請按 n 或 p 作操作 上下一筆資料；i 做資料確認塞入資料庫。");
+            })
+            $(window).load(function(e){
+                setTimeout(function () { $("img.lazy").trigger("winloaded"); }, 200);
+            })
+            function switchHelp() {
+                if ($("#help").css("display") != "none") {
+                    $("#help").hide();
+                } else {
+                    $("#help").show();
+                }
+            }
+            function insertPlaceFromJSON(address, pos, name, desc, ref, id) {
+                $(".status").html("正由 Mobile 01 資料進行 新增資料中");
+                $.ajax({
+                    url: "/controller/spider.aspx?action=insert_place",
+                    data: ({
+                        address: address,
+                        pos: pos,
+                        name: name,
+                        desc: desc,
+                        ref: ref,
+                        pre_data_id: curr_place.id,
+                        id: id,
+                        ratting:ratting
+                    }),
+                    type: "POST",
+                    success: function (res) {
+                        try {
+                            var ob = eval("(" + res + ")");
+                            if (ob.success) {
+                                $(".status").html("新增成功");
+                            } else {
+                                $(".status").html("新增失敗:" + ob.msg);
+                            }
+                            generateLevel(ob.exp);
+                        } catch (ex) {
+                            console.log(ex.toString());
+                        }
+                    }
+                })
+            }
+            function getPreData(is_next) {
+                $.ajax({
+                    url: "/controller/pre_data.aspx?action=get_pre_data",
+                    data: ({ id: next_place_id, pre_id:pre_place_id,is_next:is_next }),
+                    async:false,
+                    success: function (res) {
+                        try {
+                            var ob = eval("("+res+")");
+                            if (ob.success) {
+                                next_place_id = ob.next_id;
+                                pre_place_id = ob.pre_id;
+                                curr_place_id = ob.id;
+                                curr_place=ob;
+                            } else {
+                                alert(ob.msg);
+                            }
+                        } catch (ex) {
+                            alert(ex.toString());
+                        }
+                    },
+                    error: function (err) {
+                        console.log(err);
+                        //alert(err.toString());
+                    }
+                })
+            }
+            function insertPlaceFromGoogle(ob) {
+                $(".status").html("正由 Google 資料進行 新增資料中");
+                $.ajax({
+                    url: "/controller/spider.aspx?action=insert_place",
+                    data: ({
+                        address: ob.address,
+                        pos: ob.pos,
+                        name: ob.name,
+                        desc: ob.desc,
+                        ref: ob.ref,
+                        pre_data_id: curr_place.id ,//pre_data_id,
+                        id: ob.id,//google id
+                        cates: ob.cates,
+                        main_cate:ob.main_cate
+                    }),
+                    type:"POST",
+                    success: function (res) {
+                        try {
+                            var ob = eval("(" + res + ")");
+                            if (typeof (ob.status) != "undefined") {
+                                $(".status").addClass(ob.status);
+                            }
+                            if (ob.success) {
+                                $(".status").html("新增成功");
+                            } else {
+                                $(".status").html("新增失敗:" + ob.msg);
+                            }
+                            generateLevel(ob.exp);
+                        } catch (ex) {
+                            console.log(ex.toString());
+                        }
+                    }
+                })
+            }
+            function getMarker(is_next) {
+                for (var i = 0; i < markerArray.length; i++) {
+                    markerArray[i].setMap(null);
+                }
+                getPreData(is_next);
+                place = curr_place;
+                var arrPos = place.coordinates.split(",");
+                var newLocation = new google.maps.LatLng(arrPos[1], arrPos[0]);
+                var marker = new google.maps.Marker({
+                    map: map,
+                    position: newLocation
+                });
+                markerArray.push(marker);
+                map.setCenter(newLocation);
+                google.maps.event.addListener(marker, 'click', function () {
+                    infowindow.open(marker.get('map'), marker);
+                    infowindow.setContent("<div>" + place.name + " <a data-pos=\"" + arrPos[1] + "," + arrPos[0] + "\" href=\"#\" class=\"link-from-json\">查驗景點後新增資料</a></div><br/><div></div><br/><div class=\"description\">" + place.description + "</div>");
+                });
+                getPlace(curr_place.name, newLocation);
+                google.maps.event.trigger(marker, "click");
+            }
+
+            function getPlace(placeName, locate) {
+                for (var i = 0; i < getGPDetailTimerArray.length; i++) {
+                    clearTimeout(getGPDetailTimerArray[i]);
+                }
+                $(".status").html("正在比對 google 資料");
+                $(".check-list>dl.list").remove();
+                var request = {
+                    bounds: map.getBounds(),
+                    query: placeName,
+                    //location: map.getCenter(),
+                    raduis: 500
+                };
+                //clear marker
+                for (var i = 0; i < checkMarkerArray.length; i++) {
+                    checkMarkerArray[i].marker.setMap(null);
+                }
+                checkMarkerArray = new Array();
+                service = new google.maps.places.PlacesService(map);
+                service.textSearch(request, getPlaceCom);
+            }
+            function getPlaceCom(results, status, pagination) {
+                detailReqArray = new Array();
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    $(".status").html("已找到 " + results.length + " 資料，請選擇正確的資料。");
+                    for (var i = 0; i < results.length; i++) {
+                        var place = results[i];
+                        marker = new google.maps.Marker({
+                            map: map,
+                            icon: "http://www.planb-on.com/img/pin.png",
+                            position: place.geometry.location
+                        });
+                        checkMarkerArray.push({ marker: marker, id: place.id });
+                        var tmp = $(".check-list>dl:eq(0)").clone();
+                        $("dt", tmp).html(place.name);
+                        tmp.addClass("list");
+                        tmp.removeClass("selected");
+                        tmp.attr("data-id", place.id);
+                        if (typeof(place.types) !="undefined" && place.types.length > 0) {
+                            tmp.attr("data-main-cate", place.types[0]);
+                            tmp.attr("data-cates", place.types.join(","));
+                        }
+                        tmp.attr("data-pos", place.geometry.location.lb + "," + place.geometry.location.mb);
+                        tmp.attr("data-ref", place.reference);
+                        tmp.show();
+                        //getDetail
+                        var request = {
+                            reference: place.reference
+                        };
+                        detailReqArray.push(request);
+                        $(".check-list>dl").last().after(tmp)
+                    }
+                    $.each(detailReqArray, function (i) {
+                         var timerId=setTimeout(function () {
+                              service = new google.maps.places.PlacesService(map);
+                              service.getDetails(detailReqArray[i], function (place, status) { insertDetail(place, status, tmp) });
+                         }, i * 200);
+                         getGPDetailTimerArray.push(timerId)
+                    })
+                } else if (status == "ZERO_RESULTS") {
+                    $(".status").html("無資料");
+                }
+            }
+            function insertDetail(place, status) {
+                try{
+                    var tmp = $("dl.list[data-id=" + place.id + "]");
+                    $("dd.address", tmp).html(place.formatted_address)
+                    if (typeof (place["rating"]) != "undefined") {
+                        $("dd.rating", tmp).html("評分:"+place.rating)
+                    }
+                    
+                } catch (ex) {
+                    //console.log(place);
+                }
+            }
+            function generateLevel(exp) {
+                var level = 1;
+                if (exp > 32) {
+                    level= Math.floor(Math.log(Number(exp)) / Math.log(2))-3;
+                }
+                $(".level").html(level);
+                var m = Math.pow(2, level + 4);
+                var prev_m=0
+                if (level > 1) {
+                    prev_m = Math.pow(2, level - 1 + 4);
+                }
+                $(".exp-bar").css("width", ((Number(exp)-prev_m) * $(".exp-nav").width()) / (m-prev_m));
+            }
+            google.maps.event.addDomListener(window, 'load', initialize);
+        </script>
+        <style>
+            html,body {height:100%;width:100%;margin:0;padding:0}
+            #map-canvas {height:100%;width:80%;float:left;}
+            .insert-button {width:90px;}
+            .status {display: block;background: none;position: absolute;top: 63px;right: 472px;z-index: 203;background: #000;padding: 5px;color: #ccc;}
+            .status.warning {color:#000;background: #fcbe7a}
+            .status.error {color:#c82c2c;background: #868686}
+            .check-list {width:20%;float:left; overflow-y:scroll;height:100%;}
+            .check-list dl{padding:20px;}
+            .check-list dt{font-size:20px;}
+            .check-list dd{margin:2px 0 0 0;}
+            dl.list.selected {background:#c8ead7}
+            #help {display: block;background: #666;width: 250px;margin: 0 auto;padding: 15px;color: #e0d9bd;position: absolute;height: 200px;top: 20px;left: 100px;z-index: 200;opacity: 0.8;}
+            #help dl{margin:0;padding:0;margin-bottom:15px;}
+            #help dt{margin:0;padding:0;float:left;}
+
+            .member {position:absolute;z-index:3;right:380px;top:35px;}
+            .member .member-nav{font-size:12px;float: right;color: #fff;margin:5px 15px;word-spacing: 20px;padding: 2px 5px 2px 5px;border-radius:3px;position:relative;}
+            .member .member-nav.login{border-radius:50%;overflow:hidden;width:40px;height:40px;padding:0;border:1px solid #666;margin:8px 18px;}
+            .member .exp-nav {width: 40px;height: 4px;border-radius: 5px;position: absolute;right: 25px;top: 53px;border:1px solid #999;overflow:hidden;}
+            .member .exp-bar {width:5px;background:#ffd786;height:5px;}
+            .member .level {width: 10px;position: absolute;right: 18px;top: 39px;font-size: 12px;}
+            .member .profile-img {width:40px;height:40px;border-radius:50%;border:1px solid #999;overflow:hidden;position: absolute;top:7px;right:25px;cursor:pointer;z-index:1}
+        </style>
+    </head>
+    <body>
+        <div class="status"></div>
+        <div class="member">
+            <div class="level"></div>
+            <div class="profile-img">{Profile_Img}</div>
+            <div class="icon-db-config btn"></div>
+            <div class="exp-nav">
+                <div class="exp-bar"></div>
+            </div>
+        </div>
+        <div id="help">
+            <dl>
+                <dt>h</dt>
+                <dd>開關協助</dd>
+            </dl>
+            <dl>
+                <dt>n</dt>
+                <dd>下一筆資料</dd>
+            </dl>
+            <dl>
+                <dt>p</dt>
+                <dd>上一筆資料</dd>
+            </dl>
+            <dl>
+                <dt>f</dt>
+                <dd>下一筆 Google 資料</dd>
+            </dl>
+            <dl>
+                <dt>w</dt>
+                <dd>上一筆 Google 資料</dd>
+            </dl>
+            <dl>
+                <dt>i</dt>
+                <dd>Insert 資料到資料庫</dd>
+            </dl>
+        </div>
+        <div id="map-canvas"></div>
+        <div class="check-list">
+            <dl style="display:none">
+                <dt></dt>
+                <dd><input class="insert-button" type="button" value="新增資料" /></dd>
+                <dd class="address"></dd>
+                <dd class="rating"></dd>
+                <dd class="description"></dd>
+            </dl>
+        </div>
+    </body>
+</html>

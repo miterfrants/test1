@@ -1,0 +1,413 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>PlanB</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="/js/lib/jquery-2.0.2.min.js"></script>
+        <script type="text/javascript" src="/js/lib/facebook.js"></script>
+        <script type="text/javascript" src="/js/lib/util.js"></script>
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDMG_NlFJ6GIXrwdntTYygIHZ6lejb4tOY&libraries=places&sensor=false&language=zh-TW,zh-CN"></script>
+        <style>
+            .popup {
+                width:500px;
+                height:400px;
+                font-size:14px !important;
+            }
+
+            .loading {
+                background:url('/img/ld.gif') no-repeat;
+                width:32px;
+                height:32px;
+                display:inline-block;
+                cursor:pointer;
+            }
+            .add {
+               background:url('/img/add.png') no-repeat;
+               width:32px;
+               height:32px;
+               display:inline-block;
+               cursor:pointer;
+            }
+            .google-place-name{
+                vertical-align: top;
+                line-height: 32px;
+                font-size: 20px !important;
+                padding: 11px;
+            }
+            .google-rating {
+                font-size: 20px !important;
+                padding:11px;
+                vertical-align: top;
+                line-height: 32px;
+                font-weight:bolder;
+                color:#ff0000;
+            }
+            .fb-checkin-count{
+                font-size: 20px !important;
+                padding:11px;
+                vertical-align: top;
+                line-height: 32px;
+                font-weight:bolder;
+                color:#ff0000;
+            }
+            .fb-reget,.fb-merge {
+                color:#ff0000;
+                cursor:pointer;
+                margin:0 0 0 20px;
+            }
+            .google-desc {
+                margin-top:15px;
+                width:300px;
+                min-height:100px;
+                font-size:14px;
+            }
+        </style>
+        <script type="text/javascript">
+            //facebook block
+            (function (d) {
+                var js, id = 'facebook-jssdk'; if (d.getElementById(id)) { return; }
+                js = d.createElement('script'); js.id = id; js.async = true;
+                js.src = "//connect.facebook.net/en_US/all.js";
+                d.getElementsByTagName('head')[0].appendChild(js);
+            }(document));
+            window.fbAsyncInit = function () {
+                FB.init({
+                    appId: '577458458957121',
+                    status: false,
+                    cookie: true,
+                    xfbml: true,
+                    oauth: true,
+                    //channelUrl: 'http://apps-asus.azurewebsites.net//channel.html' //custom channel
+                });
+                //this Facebook object from /lib/facebook.js;
+                Facebook.fbTokenKey = "FB_Token";
+                Facebook.fbUIDKey = "FBID";
+                var permission = "user_status,user_about_me"
+                Facebook.auth(permission, notAuth, auth);
+            }
+            function notAuth() {
+                customerLog("not auth");
+            }
+            function auth() {
+                customerLog("auth");
+            }
+            function getFacebookData(locate, name, google_reference,diff,isMerge) {
+                $(".gm-style-iw .fb-name").html("正在載入Facebook 資料...")
+                $(".gm-style-iw .fb-checkin-count").html("")
+                if (diff == undefined) {
+                    diff=50
+                }
+                Facebook.getNearbyPlace(locate.lat(), locate.lng(), diff, isMerge, function (e) {
+                    $(".gm-style-iw .add").addClass("loading");
+                    $(".gm-style-iw .add").removeClass("add");
+                    if (e.data.length != undefined && e.data.length > 0) {
+                        var maxCompareName = "";
+                        var maxCompareDesc = "";
+                        var maxCompareCheckinCount = 0;
+                        var maxComparePageId = "";
+                        var maxComparePercentage = 0;
+                        var isMatch = false;
+                        for (var i = 0; i < e.data.length; i++) {
+                            $(".gm-style-iw .fb-name").html("正在比對 Facebook 資料...")
+                            var comparePercentage=Util.similar_text(name, e.data[i].name, true);
+                            if (comparePercentage > 85) {
+                                $(".gm-style-iw .fb-name").html("FB Name:" + e.data[i].name + "<span class=\"fb-reget\" onclick=\"getFacebookData(arrMarkers['" + google_reference + "'].place.geometry.location,'" + name + "','" + google_reference + "'," + diff + ",true)\"> 擴大至 " + diff * 2 + " 公尺 範圍再找一次。</span>");
+                                if (e.data[i].description.length > 0) {
+                                    $(".gm-style-iw .fb-desc").html(e.data[i].description);
+                                }
+                                $(".gm-style-iw .fb-checkin-count").html("FB 打卡數:" + e.data[i].checkin_count);
+                                arrMarkers[google_reference].place["fb_place_id"] = e.data[i].page_id;
+                                arrMarkers[google_reference].place["fb_description"] = e.data[i].description;
+                                arrMarkers[google_reference].place["fb_checkin_count"] = e.data[i].checkin_count;
+                                isMatch = true;
+                                break;
+                            }
+                            if (comparePercentage > maxComparePercentage) {
+                                maxCompareDesc = e.data[i].description;
+                                maxCompareName = e.data[i].name;
+                                maxCompareCheckinCount = e.data[i].checkin_count;
+                                maxComparePageId = e.data[i].page_id;
+                                maxComparePercentage = comparePercentage;
+    
+                            }
+                        }
+                        if (!isMatch) {
+                            $(".gm-style-iw .fb-name").html("Facebook 找到類似的資料:" + maxCompareName + " 相似度:" + Math.round(maxComparePercentage) + "%。<span class=\"fb-merge\" onclick=\"getFacebookData(arrMarkers['" + google_reference + "'].place.geometry.location,'" + name + "','" + google_reference + "'," + diff * 2 + ",false)\">合併 FB 資料到 Google </span><span class=\"fb-reget\" onclick=\"getFacebookData(arrMarkers['" + google_reference + "'].place.geometry.location,'" + name + "','" + google_reference + "'," + diff * 2 + ")\"> 擴大至 " + diff * 2 + " 公尺 範圍再找一次。</span>")
+                            if (isMerge != undefined) {
+                                $(".gm-style-iw .fb-checkin-count").html("FB 打卡數:" + maxCompareCheckinCount);
+                                arrMarkers[google_reference].place["fb_place_id"] = maxComparePageId;
+                                arrMarkers[google_reference].place["fb_description"] = maxCompareDesc;
+                                arrMarkers[google_reference].place["fb_checkin_count"] = maxCompareCheckinCount;
+                            }
+                        }
+                        $(".gm-style-iw .loading").addClass("add");
+                        $(".gm-style-iw .loading").removeClass("loading");
+                    } else {
+                        $(".gm-style-iw .fb-name").html("Facebook 沒有找到類似的資料。<span class=\"fb-reget\" onclick=\"getFacebookData(arrMarkers['" + google_reference + "'].place.geometry.location,'" + name + "','" + google_reference + "'," + diff * 2 + ")\"> 擴大至 " + diff * 2 + " 公尺 範圍再找一次。</span>")
+                        $(".gm-style-iw .loading").addClass("add");
+                        $(".gm-style-iw .loading").removeClass("loading");
+                    }
+                })
+            }
+            //facebook block end
+            var key = "AIzaSyDMG_NlFJ6GIXrwdntTYygIHZ6lejb4tOY";
+            var map;
+            var timeoutTimer = 0;
+            var infowindow = new google.maps.InfoWindow({ maxWidth: 600 });
+            var earthRadius = 6378137.3;
+            var arrMarker = new Array();
+            var locate=null;
+            var thida =90;
+            var num = 0;
+            var maxNum = 600;
+            var tempRadius = getQueryString("radius");
+            var radius = 1000;
+            if (tempRadius.length > 0) {
+                radius = Number(tempRadius);
+            }
+            var base = 80;
+            var noResultCount = 0;
+            var iniLat = 24.942561337387872;
+            var iniLong = 121.36862754821777;
+            var arrMarkers = new Array();
+            function getQueryString(name) {
+                name = name.replace(/[\[]/, "\\\[").replace(/[\]]/, "\\\]");
+                var regexS = "[\\?&]" + name + "=([^&#]*)";
+                var regex = new RegExp(regexS, "gi");
+                var results = regex.exec(window.location.search);
+                if (results == null)
+                    return "";
+                else
+                    return decodeURIComponent(results[1].replace(/\+/g, " "));
+            }
+            function iniMap() {
+                map = new google.maps.Map(document.getElementById('map-canvas'), {
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    center: new google.maps.LatLng(iniLat, iniLong),
+                    zoom: 15
+                });
+                google.maps.event.addListener(map, 'click', function (e) {
+                    locate = new google.maps.LatLng(e.latLng.lat(), e.latLng.lng());
+                });
+            }
+            function getGooglePlace() {
+                    var request = {
+                        location: locate,
+                        radius: radius,
+                        key:key,
+                        rankBy:google.maps.places.RankBy.PROMINENCE,
+                        types: ["tourist_attraction", "food", "amusement_park", "bar", "museum", "zoo", "establishment"],
+                        //keyword: "tourist attraction",
+                        language :"zh-TW"
+                    };
+                    var readOption = {
+                        strokeColor: '#FF0000',
+                        strokeOpacity: 0,
+                        strokeWeight: 0,
+                        fillColor: '#FF0000',
+                        fillOpacity: 0.35,
+                        map: map,
+                        center: locate,
+                        radius: radius
+                    };
+                    cityCircle = new google.maps.Circle(readOption);
+                    $("#auto-place").removeAttr("disabled");
+                    service = new google.maps.places.PlacesService(map);
+                    clearOverlays();
+                    service.nearbySearch(request, callback);
+            }
+            function clearOverlays() {
+                for (var key in arrMarkers) {
+                    arrMarkers[key].marker.setMap(null);
+                }
+                arrMarkers = [];
+            }
+            function callback(results, status, pagination) {
+                if (status == google.maps.places.PlacesServiceStatus.OK) {
+                    for (var i = 0; i < results.length; i++) {
+                        var place = results[i];
+                        //arrMarkers.push(place.reference{ob});
+                        
+                        var marker = new google.maps.Marker({
+                            map: map,
+                            position: place.geometry.location,
+                            title: place.reference
+                        });
+                        arrMarkers[place.reference] = {"place":place,"marker":marker};
+                        
+                        google.maps.event.addListener(marker, 'click', function (e) {
+                            var test = $("body>.popup")[0].outerHTML;
+                            var place = arrMarkers[this.title].place;
+                            test = test.replace(/{place_name}/gi, place.name).replace(/style="display:none"/gi, "").replace(/{ref}/gi, place.reference);
+                            infowindow.setContent(test);
+                            infowindow.open(map, this);
+                            nextStepCheckDataAndGet(arrMarkers[this.title].place.id,this.position, this.title);
+                        });
+                    }
+                    if (pagination.hasNextPage) {
+                        pagination.nextPage();
+                    }
+                }
+            }
+            function nextStepCheckDataAndGet(google_id, position, ref) {
+                $.ajax({
+                    url: "/controller/temp-place.aspx?action=is_exist",
+                    type: "POST",
+                    data: ({ google_id: google_id }),
+                    async:true,
+                    success: function (e) {
+                        try {
+                            var ob = eval("("+e+")");
+                            if (ob.success) {
+                                $(".gm-style-iw .loading").remove();
+                                $(".gm-style-iw .google-place-name").html(arrMarkers[ref].place.name + "已經新增過資料囉!");
+                                return true;
+                            } else {
+                                getGooglePlaceDetail(ref);
+                                getFacebookData(position, arrMarkers[ref].place.name, ref);
+                                return false;
+                            }
+                        } catch (ex) {
+                            
+                            alert(ex.toString());
+                        }
+                    },
+                    error: function (e) {
+                    }
+                })
+            }
+            function getGooglePlaceDetail(google_reference) {
+                $(".gm-style-iw .google-desc").html("正在載入Google Places Detail 資料...");
+                service = new google.maps.places.PlacesService(map);
+                var request = {
+                    reference: google_reference
+                };
+                service.getDetails(request, function (e) {
+                    if (e.reviews != undefined) {
+                        $(".gm-style-iw .google-desc").html("<div class=\"google\">共有" + e.reviews.length + "留言。</div><div>" + generatorGooglePlaceComment(e.reviews) + "</div>");
+                    } else {
+                        $(".gm-style-iw .google-desc").html("Google 目前沒有留言。");
+                    }
+                    if (e.rating != undefined) {
+                        $(".gm-style-iw .google-rating").html("評分:" + e.rating);
+                    } else {
+                        $(".gm-style-iw .google-rating").html("沒有評分。");
+                    }
+                });
+            }
+            function generatorGooglePlaceComment(reviews) {
+                var template = "<div><span class=\"google-review-title\">{title}</span>:{comment}</div>";
+                var result = "";
+                for (var i = 0; i < reviews.length; i++) {
+                    result += template.replace(/{title}/gi, reviews[i].author_name).replace(/{comment}/gi, reviews[i].text);
+                }
+                return result;
+            }
+            function customerLog(msg) {
+                 //console.log(msg)
+            }
+
+            
+
+            $(document).ready(function () {
+                iniMap();
+                if (locate == null) {
+                    locate = new google.maps.LatLng(iniLat,iniLong);
+                }
+                $("body").bind("keydown", function (e) {
+                    if (e.keyCode == "83") {
+                        getGooglePlace();
+                    }
+                })
+                $("body").delegate(".add", "click", function (e) {
+                    $(e.currentTarget).removeClass("add");
+                    $(e.currentTarget).addClass("loading");
+                    var target = arrMarkers[$(e.currentTarget).data("ref")].place;
+                    var types="";
+                    var phone="";
+                    var web_site="";
+                    var formate_address="";
+                    var rating="";
+                    if(target.types !=undefined){
+                        for(var i=0;i<target.types.length;i++){
+                            types+=target.types[i]+",";
+                        }
+                    }
+                    if(target.phone !=undefined){
+                        phone=target.phone;
+                    }
+                    if(target.rating !=undefined){
+                        rating=target.rating;
+                    }
+                    if(types.substr(types.length-1,1)==","){
+                        types=types.substr(0,types.length-1);
+                    }
+                    $.ajax({
+                        url: "/controller/temp-place.aspx?action=insert",
+                        type:"POST",
+                        data: ({
+                            name: target.name,
+                            google_reference: target.reference,
+                            types:types,
+                            google_rating: target.rating,
+                            google_phone: phone,
+                            google_web_site: web_site,
+                            google_address: formate_address,
+                            google_id: target.id,
+                            fb_place_id:target.fb_place_id,
+                            fb_description:target.fb_description,
+                            fb_checkin_count: target.fb_checkin_count,
+                            latitude: target.geometry.location.lat(),
+                            longitude: target.geometry.location.lng()
+
+                        }),
+                        success: function (res) {
+                            try {
+                                var ob = eval("(" + res + ")");
+                                if (ob.success) {
+                                    infowindow.close();
+                                    arrMarkers[$(e.currentTarget).data("ref")].marker.setMap(null);
+                                } else {
+                                    alert(ob.msg);
+                                    $(e.currentTarget).removeClass("loading");
+                                    $(e.currentTarget).addClass("add");
+                                }
+                            } catch (ex) {
+                                alert(ex.toString());
+                                $(e.currentTarget).removeClass("loading");
+                                $(e.currentTarget).addClass("add");
+                            }
+                            
+                        },
+                        error: function (err) {
+                            $(e.currentTarget).removeClass("loading");
+                            $(e.currentTarget).addClass("add");
+                        }
+                    })
+                    
+                    
+                })
+            })
+            
+        </script>
+        <style>
+            html,body {height:100%;width:100%;margin:0;padding:0}
+            #map-canvas {height:100%;width:100%;}
+            input{position:absolute;top:20px;left:80px;z-index:100}
+        </style>
+    </head>
+    <body>
+        <div id="map-canvas"></div>
+        <div id="fb-root"></div>
+        <div class="popup" style="display:none">
+            <div style="width:500px;"></div>
+            <span class="loading" data-ref="{ref}"></span>
+            <span class="google-place-name">{place_name}</span>
+            <span class="google-rating"></span>
+            <span class="fb-checkin-count"></span>
+            <div class="google-desc"></div>
+            <div class="fb-name"></div>
+            <div class="fb-desc"></div>
+        </div>
+    </body>
+</html>

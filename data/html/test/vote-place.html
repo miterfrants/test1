@@ -1,0 +1,186 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>PlanB</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDMG_NlFJ6GIXrwdntTYygIHZ6lejb4tOY&libraries=places&sensor=false&language=zh-TW"></script>
+        <script type="text/javascript" src="/js/lib/jquery-2.0.2.min.js"></script>
+        <script type="text/javascript">
+            var key = "AIzaSyDMG_NlFJ6GIXrwdntTYygIHZ6lejb4tOY";
+            var map= new google.maps.InfoWindow({ maxWidth: 600 });
+            var iniLat = 24.942561337387872;
+            var iniLong = 121.36862754821777;
+            var infowindow = new google.maps.InfoWindow({ maxWidth: 600 });
+            var marker = new google.maps.Marker();
+            var memoryId = -1;
+            var memoryName = "";
+            var result = "";
+            var vote = 0;
+            var isVoted = false;
+            google.maps.event.addListener(marker, 'click', function (e) {
+                infowindow.open(map, marker);
+            });
+            var jumpToCenter=null;
+            function iniMap() {
+                map = new google.maps.Map(document.getElementById('map-canvas'), {
+                    mapTypeId: google.maps.MapTypeId.ROADMAP,
+                    center: new google.maps.LatLng(iniLat, iniLong),
+                    zoom: 15
+                });
+                google.maps.event.addListener(map, 'click', function (e) {
+                    locate = new google.maps.LatLng(e.latLng.lat(), e.latLng.lng());
+                });
+            }
+            function getNextPlace(id) {
+                infowindow.close();
+                $.ajax({
+                    url: "/controller/temp-place.aspx?action=get",
+                    data: ({ id: id }),
+                    success: function (res) {
+                        var ob = eval("("+res+")");
+                        if (ob.success) {
+                            jumpToPlace(ob);
+                        } else {
+                            alert(ob.msg);
+                        }
+                    },
+                    error: function (err) {
+                        alert("不好意思有Bug:" + err.toString());
+                    }
+                })
+            }
+            function votePlace(id) {
+                $.ajax({
+                    url: "/controller/temp-place.aspx?action=get",
+                    data: ({ id: id }),
+                    success: function (res) {
+                        var ob = eval("(" + res + ")");
+                        if (ob.success) {
+                            jumpToPlace(ob);
+                        } else {
+                            alert(ob.msg);
+                        }
+                    },
+                    error: function (err) {
+                        alert("不好意思有Bug:" + err.toString());
+                    }
+                })
+            }
+            function jumpToPlace(place) {
+                isVoted = false;
+                memoryId = place.id;
+                memoryName = place.name;
+                jumpCenter = new google.maps.LatLng(place.latitude, place.longitude);
+                marker.setPosition(jumpCenter);
+                map.panTo(jumpCenter);
+                marker.setMap(map);
+                console.log($(".temp.place")[0].outerHTML);
+                result = $(".temp.place").clone().removeClass("temp")[0].outerHTML;
+                result = result.replace(/{title}/gi, place.name).replace(/{fb_checkin_count}/gi, "FB 打卡數:" + place.fb_checkin_count).replace(/{google_rating}/gi, "Google Rating:" + place.google_rating);
+                result = result.replace(/{types}/gi, "類別:"+place.types).replace(/{desc}/gi, place.desc);
+                infowindow.setContent(result);
+                new google.maps.event.trigger(marker, 'click');
+            }
+            $(document).ready(function () {
+                iniMap();
+                $("body").bind("keydown", function (e) {
+                    console.log(e.keyCode);
+                    if (e.keyCode == 78) {
+                        getNextPlace(memoryId);
+                    } else if (e.keyCode == 86) {
+                        if (isVoted) {
+                            $(".vote").trigger("click");
+                        }
+                    } else if (e.keyCode == 71) {
+                        window.open("http://www.google.com/search?q=" + memoryName);
+                    }
+                })
+                $("body").delegate(".bar-con","mousemove", function (e) {
+                    if (!isVoted) {
+                        $(".bar").css("width", e.offsetX + "px");
+                        vote = Math.round(Number($(".bar").css("width").replace(/px/gi, "")) * 50 / 120) / 10 + 0.1;
+                        $(e.currentTarget).next(".score").html(vote.toFixed(1));
+                        $(e.currentTarget).next().next().removeClass("vote").addClass("err");
+                    }
+                })
+                $("body").delegate(".bar-con","click", function (e) {
+                    if (isVoted) {
+                        isVoted = false;
+                    } else {
+                        isVoted = true;
+                        vote = Math.round(Number($(".bar").css("width").replace(/px/gi, "")) * 50 / 120) / 10 + 0.1;
+                        $(e.currentTarget).next(".score").html(vote.toFixed(1));
+                        $(e.currentTarget).next().next().removeClass("err").addClass("vote");
+                    }
+                })
+                $("body").delegate(".vote", "click", function (e) {
+                    $(e.currentTarget).html("Voting");
+                    var par=$(e.currentTarget).parent();
+                    var vote = Number($(".score", par).html()) - 0.1;
+                    $.ajax({
+                        url: "/controller/temp-place.aspx?action=vote",
+                        data: ({ vote: vote,id:memoryId }),
+                        success: function (e) {
+                            var ob = eval("(" + e + ")");
+                            if (ob.success) {
+                                getNextPlace(memoryId);
+                            } else {
+                                alert(ob.msg);
+                            }
+                        }
+                    })
+                })
+            })
+        </script>
+        <style>
+            html,body {height:100%;width:100%;margin:0;padding:0}
+            
+            #map-canvas {height:100%;width:100%;}
+            .left-menu {width:300px;position:absolute;top:0px;right:0px;height:100%;}
+            .bar-con {width:120px;height:18px;border:1px solid #666;border-radius:10px;overflow:hidden;background:#fff;position:relative;margin:0 12px 0 0;}
+            .bar {width:0px;height:18px;background:#ffd800;margin:0 !important;}
+            .score {position:relative;top:-26px;left:130px;font-size:15px !important;float:left;}
+            .temp {display:none;}
+            .place {width:600px;height:200px;}
+            .place div {margin:8px 0 0 0;}
+            .place .title {font-size:20px !important;}
+            .place span {font-size:17px !important;padding:0 20px 0 0;}
+            .title {font-size:26px !important;}
+            .send {
+                cursor: pointer;
+                width: 120px;
+                height: 30px;
+                text-align:center;
+                line-height:30px;
+                font-size: 20px !important;
+                background:#aad450;
+                border:1px solid #148b9b;
+                border-radius:8px;
+                color:#fff;
+                font-weight:bolder;
+            }
+            .send.err {
+                background:#ff6a00;
+                cursor:auto;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="map-canvas"></div>
+        <div class="place temp">
+            <div>
+            <span class="title">{title}</span>
+            <span class="fb_checkin_count">{fb_checkin_count}</span>
+            <span class="google_rating">{google_rating}</span>
+            </div>
+            <div class="types">{types}</div>
+            <div class="desc">{desc}</div>
+            
+            <div class="bar-con">
+                <div class="bar"></div>
+            </div>
+            <div class="score"></div>
+            <div class="send err">Vote</div>
+        </div>
+    </body>
+</html>

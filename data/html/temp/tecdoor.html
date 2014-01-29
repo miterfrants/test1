@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <title>PlanB</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+        <meta name="description" content="PlanB Travel">
+        <meta name="viewport" content="width=1280">
+
+        <!--Ms Icon-->
+        <meta name="application-name" content="PlanB"/>
+        <meta name="msapplication-TileColor" content="#FFFFFF">
+	    <meta name="msapplication-TileImage" content="../img/apple-touch-icon-144.png">
+
+        <!--Open Graph-->
+        <meta property="og:url" content="http://www.planb-on.com/" />
+        <meta property="og:type" content="travel" />
+        <meta property="og:title" content="PlanB Travel" />
+        <meta property="og:image" content="http://planb-on.com/img/logo-icon-195x195.png" />
+
+        <!--Favicons-->
+        <link rel="icon" href="../img/favicon.ico" type="image/x-icon" />
+        <link rel="icon" href="../img/favicon-32.png" sizes="32x32">
+
+        <!--Apple Icon-->
+        <link rel="apple-touch-icon" href="../img/apple-touch-icon-57.png"/>
+        <link rel="apple-touch-icon" sizes="72x72" href="../img/apple-touch-icon-72.png" />
+        <link rel="apple-touch-icon" sizes="114x114" href="../img/apple-touch-icon-114.png" />
+        <link rel="apple-touch-icon" sizes="144x144" href="../img/apple-touch-icon-144.png" />
+        
+        <!--twitter card-->
+        <meta name="twitter:card" content="summary">
+        <meta name="twitter:site" content="@TravelWithPlanB">
+        <meta name="twitter:creator" content="@whiltseymour">
+        <meta name="twitter:title" content="PlanB Travel">
+        <meta name="twitter:description" content="We are PlanB. We want to reconnect people and land. We are traveler, heading to the world with our freedom. Filled the love of the world in the pack. Then, with slightly proud, Home.">
+        <meta name="twitter:image" content="http://planb-on.com/img/logo-icon-195x195.png">
+
+        <!-- Opera speed dial icon -->
+	    <link rel="icon" type="image/png" href="../img/logo-icon-195x195.png">
+
+        <link rel="stylesheet" type="text/css" href="../css/main.css" />
+        <script type="text/javascript" src="../js/lib/require.js"></script>
+        <script type="text/javascript">
+            var loginURL = { fb: "{FB_LOGIN_URL}", twitter: "{TWITTER_LOGIN_URL}", google: "{GOOGLE_LOGIN_URL}" }
+            var exp = "{EXP}";
+            require([
+                '../js/module/common.js',
+               '../js/module/tecdoor.js'
+               
+            ], function (common,tecdoor) {
+                $(document).ready(function () {
+                    tecdoor.onReady(loginURL);
+                    common.onReady(loginURL,exp);
+                });
+                $(window).bind("custom_load",function(e,tecdoor){
+                    setTimeout(function(){
+                        tecdoor.onLoad();
+                        common.onLoad();
+                    },60);
+                })            
+                $(window).trigger("custom_load", tecdoor);
+            });
+        </script>
+        <!--google analytics-->
+        <script>
+            (function (i, s, o, g, r, a, m) {
+                i['GoogleAnalyticsObject'] = r; i[r] = i[r] || function () {
+                    (i[r].q = i[r].q || []).push(arguments)
+                }, i[r].l = 1 * new Date(); a = s.createElement(o),
+                m = s.getElementsByTagName(o)[0]; a.async = 1; a.src = g; m.parentNode.insertBefore(a, m)
+            })(window, document, 'script', '//www.google-analytics.com/analytics.js', 'ga');
+
+            ga('create', 'UA-42774169-1', 'planb-on.com');
+            ga('send', 'pageview');
+
+        </script>
+        <!--end of google analytics-->
+    </head>
+    <body>
+        <div class="top-bar">
+            <div class="icon-logo"></div>
+            <div class="icon-config btn"></div>
+            <div class="member-nav btn {MEMBER_STATUS}" id="member">Login</div>
+        </div>
+        <div id="content" class="tecdoor" >
+            <!--Unlogin S-->
+            <div class="door {MEMBER_STATUS} float-fix">
+                <div class="login icon-circle-google btn" data-login="google"></div>
+                <div class="login icon-circle-twitter btn" data-login="twitter"></div>
+                <div class="login icon-circle-fb btn" data-login="fb"></div>
+
+            </div>
+            <!--Unlogin E-->
+            <div class="article {MEMBER_STATUS}">
+                <div class="lang">
+                    <div class="icon-flag-tw small-icon btn unactive" data-lang="zh_tw"></div>
+                    <div class="icon-flag-us small-icon btn unactive" data-lang="en_us"></div>
+                    <!--<div class="icon-flag-uk small-icon btn unactive" data-lang="en_uk"></div>-->
+                    <!--<div class="icon-flag-jp small-icon btn unactive" data-lang="ja"></div>
+                    <div class="icon-flag-sp small-icon btn unactive" data-lang="sp"></div>-->
+                    <div class="icon-flag-cn small-icon btn unactive" data-lang="zh_cn"></div>
+                </div>
+                <div class="article-txt">{DOOR_ARTICLE}</div>
+            </div>
+        </div>
+        
+        <div class="footer">
+            <div>Term of Use<br/>
+            PlanB 2012-2013 All Right Reserved
+            </div>
+        </div>
+    </body>
+</html>
